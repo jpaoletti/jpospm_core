@@ -20,7 +20,7 @@
 
 <project name="jPOS-PM" basedir="../..">
     <property file="build.properties"/>
-    <property name="module.name" value="pm_core" />
+    <property name="module.name" value="jpospm_core" />
     <property name="name" value="pm" />
     <property name="dist.dir"    value="dist"/>
     <property name="build.dir"   value="build"/>
