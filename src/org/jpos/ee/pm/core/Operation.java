@@ -1,6 +1,6 @@
 /*
  * jPOS Project [http://jpos.org]
- * Copyright (C) 2000-2010 Alejandro P. Revilla
+ * Copyright (C) 2000-2011 Alejandro P. Revilla
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -15,7 +15,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package org.jpos.ee.pm.core;
 
 import java.util.ArrayList;
@@ -41,16 +40,14 @@ import org.jpos.ee.pm.validator.Validator;
  * }
  * </pre>
  *  
- * @author yero jeronimo.paoletti@gmail.com
+ * @author jpaoletti jeronimo.paoletti@gmail.com
  * */
-
 public class Operation extends PMCoreObject {
+
     /**The operation Id. Must be unique and only one word */
     private String id;
-    
     /**Determine if the operation is enabled or not.*/
     private Boolean enabled;
-    
     /**Scope of the operation. Possibles values are:
      * <dl>
      * <dd> general </dd><dt>A general scope operation affects all the instances of the entity or none of them. </dt>
@@ -59,33 +56,27 @@ public class Operation extends PMCoreObject {
      * </dl>
      * */
     private String scope;
-    
     /**A String with other operations id separated by blanks where this operation will be shown*/
     private String display;
-    
     /**If defined, its a direct link to a fixed URL*/
     private String url;
-    
     /** Indicates if the entity's title is shown */
     private Boolean showTitle;
-    
     /** Indicate if a confirmation is needed before proceed.*/
     private Boolean confirm;
-    
     /**@see OperationContext*/
     private OperationContext context;
-    
     /**A list of validators for the operation.*/
     private ArrayList<Validator> validators;
-    
     /**A properties object to get some extra configurations*/
     private Properties properties;
-    
+    private String perm;
+
     /**Determine if this operation is visible in another. 
      * @param other The id of the other operation
      * @return true if this operation is visible in the other*/
-    public boolean isDisplayed(String other){
-        return (getDisplay()==null || getDisplay().compareTo("all")==0 || getDisplay().indexOf(other)!=-1);
+    public boolean isDisplayed(String other) {
+        return (getDisplay() == null || getDisplay().compareTo("all") == 0 || getDisplay().indexOf(other) != -1);
     }
 
     /**
@@ -115,7 +106,9 @@ public class Operation extends PMCoreObject {
      * @return the enabled
      */
     public boolean isEnabled() {
-    	if(enabled==null) return true;
+        if (enabled == null) {
+            return true;
+        }
         return enabled;
     }
 
@@ -130,7 +123,9 @@ public class Operation extends PMCoreObject {
      * @return the scope
      */
     public String getScope() {
-    	if(scope==null || scope.trim().compareTo("")==0) return "item";
+        if (scope == null || scope.trim().compareTo("") == 0) {
+            return "item";
+        }
         return scope;
     }
 
@@ -145,7 +140,9 @@ public class Operation extends PMCoreObject {
      * @return the display
      */
     public String getDisplay() {
-    	if(display==null || display.trim().compareTo("")==0) return "all";
+        if (display == null || display.trim().compareTo("") == 0) {
+            return "all";
+        }
         return display;
     }
 
@@ -197,26 +194,27 @@ public class Operation extends PMCoreObject {
     public void setValidators(ArrayList<Validator> validators) {
         this.validators = validators;
     }
-    
+
     /**Getter for a specific property with a default value in case its not defined. 
      * Only works for string.
      * @param name Property name
      * @param def Default value
      * @return Property value only if its a string */
-    public String getConfig (String name, String def) {
+    public String getConfig(String name, String def) {
         if (properties != null) {
-            Object obj = properties.get (name);
-            if (obj instanceof String)
+            Object obj = properties.get(name);
+            if (obj instanceof String) {
                 return obj.toString();
-        } 
+            }
+        }
         return def;
     }
-    
+
     /**Getter for any property in the properties object
      * @param name The property name
      * @return The property value */
-    public String getConfig (String name) {
-        return getConfig (name, null);
+    public String getConfig(String name) {
+        return getConfig(name, null);
     }
 
     /**
@@ -232,7 +230,9 @@ public class Operation extends PMCoreObject {
      * @return
      */
     public Boolean getShowTitle() {
-        if(showTitle==null)return true;
+        if (showTitle == null) {
+            return true;
+        }
         return showTitle;
     }
 
@@ -247,7 +247,17 @@ public class Operation extends PMCoreObject {
      * @return the confirm
      */
     public Boolean getConfirm() {
-        if(confirm == null) return false;
+        if (confirm == null) {
+            return false;
+        }
         return confirm;
+    }
+
+    public String getPerm() {
+        return perm;
+    }
+
+    public void setPerm(String perm) {
+        this.perm = perm;
     }
 }

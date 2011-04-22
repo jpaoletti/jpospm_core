@@ -57,6 +57,7 @@ public class EntityParser extends ParserSupport {
         getXstream().useAttributeFor(Operation.class, "scope");
         getXstream().useAttributeFor(Operation.class, "display");
         getXstream().useAttributeFor(Operation.class, "confirm");
+        getXstream().useAttributeFor(Operation.class, "perm");
 
         getXstream().alias("owner", EntityOwner.class);
         getXstream().alias("highlights", Highlights.class);
