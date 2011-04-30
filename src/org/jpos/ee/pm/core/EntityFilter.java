@@ -67,7 +67,7 @@ public class EntityFilter extends PMCoreObject {
         if (result != null) {
             return result;
         } else {
-            return FilterOperation.EQ;
+            return FilterOperation.LIKE;
         }
     }
 }
