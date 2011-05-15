@@ -63,11 +63,13 @@ public class OperationCommandSupport implements OperationCommand {
         return true;
     }
 
-    public void excecute(PMContext ctx) throws PMException {
+    @Override
+    public boolean excecute(PMContext ctx) throws PMException {
         boolean step = prepare(ctx);
         if (step) {
             internalExecute(ctx);
         }
+        return step;
     }
 
     protected void internalExecute(PMContext ctx) throws PMException {
@@ -295,6 +297,7 @@ public class OperationCommandSupport implements OperationCommand {
         return false;
     }
 
+    @Override
     public String getOperationId() {
         return operationId;
     }
