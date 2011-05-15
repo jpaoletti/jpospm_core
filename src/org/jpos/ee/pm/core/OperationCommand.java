@@ -28,7 +28,7 @@ public interface OperationCommand {
      * @param ctx
      * @return true if the operation was completly excecuted.
      */
-    public boolean excecute(PMContext ctx) throws PMException;
+    public boolean execute(PMContext ctx) throws PMException;
 
     public String getOperationId();
 }

@@ -64,7 +64,7 @@ public class OperationCommandSupport implements OperationCommand {
     }
 
     @Override
-    public boolean excecute(PMContext ctx) throws PMException {
+    public boolean execute(PMContext ctx) throws PMException {
         boolean step = prepare(ctx);
         if (step) {
             internalExecute(ctx);
