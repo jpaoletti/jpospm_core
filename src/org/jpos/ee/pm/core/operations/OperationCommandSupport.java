@@ -419,4 +419,16 @@ public class OperationCommandSupport implements OperationCommand {
     protected boolean finished(PMContext ctx) {
         return ctx.getParameter(FINISH) != null;
     }
+
+    protected void assertNotNull(Object o, String msgkey) throws PMException {
+        if (o == null) {
+            throw new PMException(msgkey);
+        }
+    }
+
+    protected void assertTrue(boolean b, String msgkey) throws PMException {
+        if (!b) {
+            throw new PMException(msgkey);
+        }
+    }
 }
