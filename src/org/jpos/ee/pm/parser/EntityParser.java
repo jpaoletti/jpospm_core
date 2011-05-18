@@ -1,6 +1,6 @@
 /*
  * jPOS Project [http://jpos.org]
- * Copyright (C) 2000-2010 Alejandro P. Revilla
+ * Copyright (C) 2000-2011 Alejandro P. Revilla
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -58,6 +58,7 @@ public class EntityParser extends ParserSupport {
         getXstream().useAttributeFor(Operation.class, "display");
         getXstream().useAttributeFor(Operation.class, "confirm");
         getXstream().useAttributeFor(Operation.class, "perm");
+        getXstream().useAttributeFor(Operation.class, "follows");
 
         getXstream().alias("owner", EntityOwner.class);
         getXstream().alias("highlights", Highlights.class);

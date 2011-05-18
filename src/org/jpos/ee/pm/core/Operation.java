@@ -33,6 +33,8 @@ import org.jpos.ee.pm.validator.Validator;
  * <operation id="some_id" enabled="true" scope="general | item | selected" display="all | add list edit">
  *    <showTitle>true</showTitle>
  *    <confirm>true</confirm>
+ *    <perm>sysadmin</perm>
+ *    <follows>other_operation_id</follows>
  *    <context class="some.operation.Context" />
  *    <validator class="some.validator.Validator1" />
  *    <validator class="some.validator.Validator2" />
@@ -70,7 +72,18 @@ public class Operation extends PMCoreObject {
     private ArrayList<Validator> validators;
     /**A properties object to get some extra configurations*/
     private Properties properties;
+    /**Permission to do this operation*/
     private String perm;
+    // Another operation ID that follows this one on success
+    private String follows;
+
+    public String getFollows() {
+        return follows;
+    }
+
+    public void setFollows(String follows) {
+        this.follows = follows;
+    }
 
     /**Determine if this operation is visible in another. 
      * @param other The id of the other operation
