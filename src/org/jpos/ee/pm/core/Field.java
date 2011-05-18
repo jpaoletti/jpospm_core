@@ -84,7 +84,9 @@ public class Field extends PMCoreObject {
             final Object instance = ctx.get(PM_ENTITY_INSTANCE);
             ctx.put(PM_ENTITY_INSTANCE_WRAPPER, new EntityInstanceWrapper(instance));
             ctx.put(PM_FIELD, this);
-            ctx.put(PM_FIELD_VALUE, getPresentationManager().get(instance,getProperty()));
+            if (ctx.get(PM_FIELD_VALUE) == null) {
+                ctx.put(PM_FIELD_VALUE, getPresentationManager().get(instance, getProperty()));
+            }
             return c.visualize(ctx);
         } catch (Exception e) {
             getPresentationManager().error(e);
@@ -104,7 +106,7 @@ public class Field extends PMCoreObject {
             properties.put("filename", "cfg/converters/show.tostring.converter");
             c.setProperties(properties);
             return c;
-        }else{
+        } else {
             return getPresentationManager().getService().getDefaultConverter();
         }
     }

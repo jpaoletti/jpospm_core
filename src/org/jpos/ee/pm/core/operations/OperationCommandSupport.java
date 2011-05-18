@@ -63,11 +63,13 @@ public class OperationCommandSupport implements OperationCommand {
         return true;
     }
 
-    public void excecute(PMContext ctx) throws PMException {
+    @Override
+    public boolean execute(PMContext ctx) throws PMException {
         boolean step = prepare(ctx);
         if (step) {
             internalExecute(ctx);
         }
+        return step;
     }
 
     protected void internalExecute(PMContext ctx) throws PMException {
@@ -295,6 +297,7 @@ public class OperationCommandSupport implements OperationCommand {
         return false;
     }
 
+    @Override
     public String getOperationId() {
         return operationId;
     }
@@ -418,5 +421,17 @@ public class OperationCommandSupport implements OperationCommand {
      */
     protected boolean finished(PMContext ctx) {
         return ctx.getParameter(FINISH) != null;
+    }
+
+    protected void assertNotNull(Object o, String msgkey) throws PMException {
+        if (o == null) {
+            throw new PMException(msgkey);
+        }
+    }
+
+    protected void assertTrue(boolean b, String msgkey) throws PMException {
+        if (!b) {
+            throw new PMException(msgkey);
+        }
     }
 }

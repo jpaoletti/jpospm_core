@@ -46,7 +46,7 @@ public class ListOperation extends OperationCommandSupport {
         if (page != null) {
             pmlist.setPage(page);
         }
-        final Integer rpp = (Integer) ctx.get("rows_per_page");
+        final Integer rpp = (Integer) ctx.get("rowsPerPage");
         if (rpp != null) {
             pmlist.setRowsPerPage(rpp);
         }
