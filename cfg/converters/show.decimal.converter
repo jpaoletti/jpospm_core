@@ -1,9 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<generic-converter>
-	<visualize>
-		return (value==null)?"":(new java.text.DecimalFormat (converter.getConfig("format", "#0.00"))).format(value);
-	</visualize>
-	<build>
-		return "IgnoreConvertionException";
-	</build>
-</generic-converter>
+String visualize(){
+    return (value==null)?"":(new java.text.DecimalFormat (converter.getConfig("format", "#0.00"))).format(value);
+}
+Object build(){
+    return "IgnoreConvertionException";
+}

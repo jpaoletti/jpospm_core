@@ -1,9 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<generic-converter>
-	<visualize>
-		return (value==null)?"-":value.toString();
-	</visualize>
-	<build>
-		return "IgnoreConvertionException";
-	</build>
-</generic-converter>
+String visualize(){
+    return (value==null)?"-":value.toString();
+}
+Object build(){
+    return "IgnoreConvertionException";
+}
