@@ -17,6 +17,7 @@
  */
 package org.jpos.ee.pm.core;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,6 +47,13 @@ public class EntityFilter extends PMCoreObject {
 
     public void addFilter(String fieldId, List<Object> values, FilterOperation operation){
         filterOperations.put(fieldId, operation);
+        filterValues.put(fieldId, values);
+    }
+
+    public void addFilter(String fieldId, Object value, FilterOperation operation){
+        filterOperations.put(fieldId, operation);
+        final List<Object> values = new ArrayList<Object>();
+        values.add(value);
         filterValues.put(fieldId, values);
     }
 
