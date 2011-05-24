@@ -29,4 +29,5 @@ public enum FilterOperation {
     ,GE //Greater Equal
     ,LT //Less Than
     ,LE //Less Equal
+    ,BETWEEN //Between
 }
