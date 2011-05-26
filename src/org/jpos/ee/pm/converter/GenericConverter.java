@@ -51,13 +51,13 @@ public class GenericConverter extends Converter {
             bash.set("value", o);
             bash.set("converter", this);
             debug("Generic Converter Visualize value: " + o);
-            if (o == null) {
-                return getConfig("null-value", "-");
-            }
-            String result = bash.eval(content+"\n"+"visualize();").toString();
-            final String res = visualize(result, ctx.getString(PM_EXTRA_DATA));
-            if ("IgnoreConvertionException".equals(res)) {
-                throw new IgnoreConvertionException("");
+            String res = getConfig("null-value", "-");
+            if (o != null) {
+                String result = bash.eval(content + "\n" + "visualize();").toString();
+                res = visualize(result, ctx.getString(PM_EXTRA_DATA));
+                if ("IgnoreConvertionException".equals(res)) {
+                    throw new IgnoreConvertionException("");
+                }
             }
             final Converter c = field.getDefaultConverter();
             if (c != null) {
@@ -78,7 +78,7 @@ public class GenericConverter extends Converter {
             Interpreter bash = getBsh();
             bash.set("value", ctx.get(PM_FIELD_VALUE));
             bash.set("converter", this);
-            final Object res = bash.eval(content+"\n"+"build();");
+            final Object res = bash.eval(content + "\n" + "build();");
             if ("IgnoreConvertionException".equals(res)) {
                 throw new IgnoreConvertionException("");
             }
