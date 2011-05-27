@@ -157,6 +157,17 @@ public class PMContext extends Context {
     }
 
     /**
+     * @return the operation
+     */
+    public Operations getOperations(Object item, Operation oper) throws PMException {
+        if (getEntity() != null) {
+            return getEntity().getOperations().getOperationsFor(this, item, oper);
+        } else {
+            return new Operations();
+        }
+    }
+
+    /**
      * Return the entity in the container
      * @return The entity
      * @throws PMException
