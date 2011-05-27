@@ -56,8 +56,8 @@ public class OperationCommandSupport implements OperationCommand {
             throw new PMUnauthorizedException();
         }
         configureEntityContainer(ctx);
-        operation = configureOperations(ctx);
         configureSelected(ctx);
+        operation = configureOperations(ctx);
         //Try to refresh selected object, if there is one
         refreshSelectedObject(ctx, null);
         return true;
@@ -201,8 +201,10 @@ public class OperationCommandSupport implements OperationCommand {
                 ctx.getEntityContainer().setOwner(null);
             }
         }
+        //Work only on one item operations.
         if (ctx.hasEntityContainer()) {
-            ctx.put(OPERATIONS, ctx.getEntity().getOperations().getOperationsFor(ctx.getOperation()));
+            final Object item = (ctx.getSelected() == null) ? null : ctx.getSelected().getInstance();
+            ctx.put(OPERATIONS, ctx.getEntity().getOperations().getOperationsFor(ctx, item, ctx.getOperation()));
         }
         return op;
     }

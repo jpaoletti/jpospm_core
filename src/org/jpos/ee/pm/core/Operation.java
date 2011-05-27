@@ -76,6 +76,16 @@ public class Operation extends PMCoreObject {
     private String perm;
     // Another operation ID that follows this one on success
     private String follows;
+    //Conditional to show on others
+    private OperationCondition condition;
+
+    public OperationCondition getCondition() {
+        return condition;
+    }
+
+    public void setCondition(OperationCondition condition) {
+        this.condition = condition;
+    }
 
     public String getFollows() {
         return follows;
@@ -85,9 +95,11 @@ public class Operation extends PMCoreObject {
         this.follows = follows;
     }
 
-    /**Determine if this operation is visible in another. 
+    /**
+     * Determine if this operation is visible in another.
      * @param other The id of the other operation
-     * @return true if this operation is visible in the other*/
+     * @return true if this operation is visible in the other
+     */
     public boolean isDisplayed(String other) {
         return (getDisplay() == null || getDisplay().compareTo("all") == 0 || getDisplay().indexOf(other) != -1);
     }

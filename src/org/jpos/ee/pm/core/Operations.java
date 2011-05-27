@@ -1,6 +1,6 @@
 /*
  * jPOS Project [http://jpos.org]
- * Copyright (C) 2000-2010 Alejandro P. Revilla
+ * Copyright (C) 2000-2011 Alejandro P. Revilla
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -18,20 +18,18 @@
 package org.jpos.ee.pm.core;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
-/**Just a container for a list of operations and some helpers.
+/**
+ * Just a container for a list of operations and some helpers.
  * @author jpaoletti jeronimo.paoletti@gmail.com
- * */
+ *
+ */
 public class Operations extends PMCoreObject {
 
     /**The operation list*/
     private List<Operation> operations;
-    /**Optimization*/
-    private Map<String, Operations> opsmap;
 
     /**Returns the operation of the given id or a new default operation
      * @param id The id
@@ -46,9 +44,11 @@ public class Operations extends PMCoreObject {
         return newDefaultOperation(id);
     }
 
-    /**A new Operation with the given id
+    /**
+     * A new Operation with the given id
      * @param id The operation id
-     * @return The new operation*/
+     * @return The new operation
+     */
     private Operation newDefaultOperation(String id) {
         Operation op = new Operation();
         op.setId(id);
@@ -56,28 +56,23 @@ public class Operations extends PMCoreObject {
         return op;
     }
 
-    /**Returns the Operations for a given operation. That is the operations that are different to
+    /**
+     * Returns the Operations for a given operation. That is the operations that are different to
      * the given one, enabled and visible in it.
      * @param operation The operation
-     * @return The operations*/
-    public Operations getOperationsFor(Operation operation) {
-        if (opsmap == null) {
-            opsmap = new HashMap<String, Operations>();
-        }
-        Operations result = opsmap.get(operation.getId());
-        if (result != null) {
-            return result;
-        }
-
-        result = new Operations();
-        List<Operation> r = new ArrayList<Operation>();
+     * @return The operations
+     */
+    public Operations getOperationsFor(final PMContext ctx, Object instance, Operation operation) throws PMException {
+        final Operations result = new Operations();
+        final List<Operation> r = new ArrayList<Operation>();
         for (Operation op : getOperations()) {
             if (op.isDisplayed(operation.getId()) && op.isEnabled() && !op.equals(operation)) {
-                r.add(op);
+                if (op.getCondition() == null || op.getCondition().check(ctx, instance, op, operation.getId())) {
+                    r.add(op);
+                }
             }
         }
         result.setOperations(r);
-        opsmap.put(operation.getId(), result);
         return result;
     }
 
