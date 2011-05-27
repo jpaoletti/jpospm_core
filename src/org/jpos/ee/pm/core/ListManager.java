@@ -28,12 +28,12 @@ import org.jpos.util.DisplacedList;
 public class ListManager {
 
     public PaginatedList initList(PMContext ctx, Operations operations) throws PMException {
-        PaginatedList pmlist = new PaginatedList();
+        final PaginatedList pmlist = new PaginatedList();
         //Initial values
         pmlist.setDesc(false);
         pmlist.setOrder(null);
         pmlist.setPage(1);
-        pmlist.setRowsPerPage(10);
+        pmlist.setRowsPerPage(Integer.parseInt(ctx.getOperation().getConfig("rows-per-page","10")));
 
         pmlist.setEntity(ctx.getEntity());
         pmlist.setOperations(operations.getOperationsForScope(Constants.SCOPE_GRAL, Constants.SCOPE_SELECTED));
