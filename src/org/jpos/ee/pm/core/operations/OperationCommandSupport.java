@@ -167,11 +167,14 @@ public class OperationCommandSupport implements OperationCommand {
                 String[] ss = identified.split(":");
                 //TODO Throw exception when the size of this is not 2
                 if (ss.length != 2) {
-                    ctx.getPresentationManager().error("Ivalid row identifier!");
+                    throw new PMException("unknow.item");
                 } else {
-                    String prop = ss[0];
-                    String value = ss[1];
-                    EntityInstanceWrapper wrapper = new EntityInstanceWrapper(ctx.getEntity().getDataAccess().getItem(ctx, prop, value));
+                    final String prop = ss[0];
+                    final String value = ss[1];
+                    final Object object = ctx.getEntity().getDataAccess().getItem(ctx, prop, value);
+                    if(object==null)
+                        throw new PMException("unknow.item");
+                    final EntityInstanceWrapper wrapper = new EntityInstanceWrapper(object);
                     ctx.getEntityContainer().setSelected(wrapper);
                 }
             } else {
