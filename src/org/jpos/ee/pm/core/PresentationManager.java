@@ -527,12 +527,11 @@ public class PresentationManager extends Observable {
      * @throws PMException on already defined session
      * @return New session
      */
-    public PMSession registerSession(String sessionId) throws PMException {
+    public PMSession registerSession(String sessionId){
         synchronized (sessions) {
-            if (sessions.containsKey(sessionId)) {
-                throw new PMException("Session already defined");
+            if (!sessions.containsKey(sessionId)) {
+                sessions.put(sessionId, new PMSession(sessionId));
             }
-            sessions.put(sessionId, new PMSession(sessionId));
             return getSession(sessionId);
         }
     }
