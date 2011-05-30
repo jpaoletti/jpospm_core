@@ -36,7 +36,7 @@ import org.jpos.util.Logger;
  * @author jpaoletti
  */
 public class OperationCommandSupport implements OperationCommand {
-
+    public static final String UNESPECTED_ERROR = "pm_core.unespected.error";
     public static final String FINISH = "finish";
     public static final String PM_ENTITY_INSTANCE = "PM_ENTITY_INSTANCE";
     public static final String LAST_PM_ID = "LAST_PM_ID";
@@ -113,15 +113,31 @@ public class OperationCommandSupport implements OperationCommand {
             throw e;
         } catch (Exception e) {
             ctx.getPresentationManager().error(e);
-            throw new PMException(e);
+            throw new PMException(UNESPECTED_ERROR, e);
         } finally {
             if (tx != null) {
                 ctx.getPresentationManager().debug(this, "Rolling Back Transaction " + tx);
                 try {
                     ctx.getPresentationManager().getPersistenceManager().rollback(ctx, tx);
+                    rollback(ctx);
                 } catch (Exception e) {
                     ctx.getPresentationManager().error(e);
                 }
+            }
+        }
+    }
+
+    protected void rollback(PMContext ctx) throws PMException {
+        final EntityContainer c = ctx.getEntityContainer(true);
+        //We need to remove reference of new objects
+        if (c != null) {
+            if (ctx.getSelected() != null && ctx.getEntityContainer().isSelectedNew()) {
+                if (c.getOwner() != null) {
+                    final Object object = ctx.getEntityContainer().getOwner().getSelected().getInstance();
+                    final Collection<Object> collection = (Collection<Object>) ctx.getPresentationManager().get(object, ctx.getEntity().getOwner().getEntityProperty());
+                    collection.remove(ctx.getSelected().getInstance());
+                }
+                ctx.getEntityContainer().setSelected(null);
             }
         }
     }
@@ -172,8 +188,9 @@ public class OperationCommandSupport implements OperationCommand {
                     final String prop = ss[0];
                     final String value = ss[1];
                     final Object object = ctx.getEntity().getDataAccess().getItem(ctx, prop, value);
-                    if(object==null)
+                    if (object == null) {
                         throw new PMException("unknow.item");
+                    }
                     final EntityInstanceWrapper wrapper = new EntityInstanceWrapper(object);
                     ctx.getEntityContainer().setSelected(wrapper);
                 }

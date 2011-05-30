@@ -34,17 +34,8 @@ public class AddOperation extends OperationCommandSupport {
     protected boolean prepare(PMContext ctx) throws PMException {
         super.prepare(ctx);
         if (ctx.getParameter("finish") == null) {
-            //Creates bean and put it in session
-            Object obj;
-            try {
-                obj = getPMService().getFactory().newInstance(ctx.getEntity().getClazz());
-                ctx.getEntityContainer().setSelected(new EntityInstanceWrapper(obj));
-                ctx.getEntityContainer().setSelectedNew(true);
-                return false;
-            } catch (ConfigurationException e) {
-                ctx.getPresentationManager().error(e);
-                throw new PMException("pm_core.unespected.error");
-            }
+            initBean(ctx);
+            return false;
         } else {
             if (ctx.getSelected() == null) {
                 throw new PMException("pm.instance.not.found");
@@ -67,6 +58,26 @@ public class AddOperation extends OperationCommandSupport {
             }
         }
         return true;
+    }
+
+    @Override
+    protected void rollback(PMContext ctx) throws PMException {
+        super.rollback(ctx);
+        initBean(ctx);
+    }
+
+
+
+    protected void initBean(PMContext ctx) throws PMException {
+        //Creates bean and put it in session
+        try {
+            final Object obj = getPMService().getFactory().newInstance(ctx.getEntity().getClazz());
+            ctx.getEntityContainer().setSelected(new EntityInstanceWrapper(obj));
+            ctx.getEntityContainer().setSelectedNew(true);
+        } catch (ConfigurationException e) {
+            ctx.getPresentationManager().error(e);
+            throw new PMException(UNESPECTED_ERROR);
+        }
     }
 
     @Override
