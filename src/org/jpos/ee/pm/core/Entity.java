@@ -119,13 +119,17 @@ public class Entity extends PMCoreObject {
      * @return The list
      */
     public ArrayList<Field> getAllFields() {
-        ArrayList<Field> r = new ArrayList<Field>();
+        final ArrayList<Field> r = new ArrayList<Field>();
+        final List<String> ids = new ArrayList<String>();
         if (getFields() != null) {
-            r.addAll(getFields());
+            for (Field field : getFields()) {
+                r.add(field);
+                ids.add(field.getId());
+            }
         }
         if (getExtendzEntity() != null) {
             for (Field field : getExtendzEntity().getAllFields()) {
-                if (!r.contains(field)) {
+                if (!ids.contains(field.getId())) {
                     r.add(field);
                 }
             }
@@ -231,6 +235,7 @@ public class Entity extends PMCoreObject {
     /**This method fills the extendsFields variable with the parent Fields.
      * If some field is redefined, parent field is ignored
      * @param entity The parent entity given by PM engine*/
+    @Deprecated
     public void fillFields(Entity entity) {
         for (Field field : entity.getAllFields()) {
             if (!containsField(field.getId())) {
