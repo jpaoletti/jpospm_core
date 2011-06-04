@@ -62,7 +62,9 @@ public class ListOperation extends OperationCommandSupport {
             if (o != null) {
                 pmlist.setOrder(o);
             } else {
-                pmlist.setOrder(ctx.getEntity().getOrderedFields().get(0).getId());
+                if (pmlist.getOrder() == null) {
+                    pmlist.setOrder(ctx.getEntity().getOrderedFields().get(0).getId());
+                }
             }
         } catch (PMException e) {
             PresentationManager.getPm().error(e);
