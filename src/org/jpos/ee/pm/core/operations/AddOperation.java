@@ -85,6 +85,7 @@ public class AddOperation extends OperationCommandSupport {
         Object instance = ctx.getSelected().getInstance();
         ctx.getPresentationManager().debug(this, "Saving '" + ctx.getEntity().getId() + "' to Data Access");
         ctx.getEntity().getDataAccess().add(ctx, instance);
+        ctx.getEntityContainer().setSelectedNew(false);
     }
 
     @Override
