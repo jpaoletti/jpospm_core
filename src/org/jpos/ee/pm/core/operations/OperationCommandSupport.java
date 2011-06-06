@@ -243,7 +243,12 @@ public class OperationCommandSupport implements OperationCommand {
 
         if (origin != null) {
             if (!entityContainer.isSelectedNew()) {
-                Object o = ctx.getEntity().getDataAccess().refresh(ctx, origin.getInstance());
+                Object o = null;
+                try {
+                    o = ctx.getEntity().getDataAccess().refresh(ctx, origin.getInstance());
+                } catch (Exception e) {
+                    o = null;
+                }
                 entityContainer.setSelected(new EntityInstanceWrapper(o));
                 if (o == null) {
                     ctx.getPresentationManager().warn("Fresh instance is null while origin was '" + origin.getInstance() + "'");
