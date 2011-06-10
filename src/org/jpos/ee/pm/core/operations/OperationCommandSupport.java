@@ -36,6 +36,7 @@ import org.jpos.util.Logger;
  * @author jpaoletti
  */
 public class OperationCommandSupport implements OperationCommand {
+
     public static final String UNESPECTED_ERROR = "pm_core.unespected.error";
     public static final String FINISH = "finish";
     public static final String PM_ENTITY_INSTANCE = "PM_ENTITY_INSTANCE";
@@ -354,7 +355,9 @@ public class OperationCommandSupport implements OperationCommand {
             }
             i++;
         }
-        Logger.log(evt);
+        if (ctx.getPresentationManager().isDebug()) {
+            Logger.log(evt);
+        }
     }
 
     protected void doProcessField(EntityInstanceWrapper wrapper, int i, final Converter converter, PMContext ctx, Field field, Object converted) throws PMException {
