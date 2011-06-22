@@ -177,6 +177,17 @@ public class PMContext extends Context {
     }
 
     /**
+     * @return true when the context contains an entity. False otherwise
+     */
+    public boolean getEntityExist() {
+        try {
+            return getEntityContainer(true) != null && getEntityContainer().getEntity() != null;
+        } catch (PMException ex) {
+            return false;
+        }
+    }
+
+    /**
      * Return the list of the container
      * @return The list
      * @throws PMException
