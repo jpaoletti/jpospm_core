@@ -1,6 +1,6 @@
 /*
  * jPOS Project [http://jpos.org]
- * Copyright (C) 2000-2010 Alejandro P. Revilla
+ * Copyright (C) 2000-2011 Alejandro P. Revilla
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -527,7 +527,7 @@ public class PresentationManager extends Observable {
      * @throws PMException on already defined session
      * @return New session
      */
-    public PMSession registerSession(String sessionId){
+    public PMSession registerSession(String sessionId) {
         synchronized (sessions) {
             if (!sessions.containsKey(sessionId)) {
                 sessions.put(sessionId, new PMSession(sessionId));
@@ -601,6 +601,10 @@ public class PresentationManager extends Observable {
 
     public String getMenu() {
         return cfg.get("menu", "cfg/pm.menu.xml");
+    }
+
+    public boolean isHideableHeader(){
+        return cfg.getBoolean("hideable-header", false);
     }
 
     public static synchronized String newSessionId() {
