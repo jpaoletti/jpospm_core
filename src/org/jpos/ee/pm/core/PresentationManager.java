@@ -636,4 +636,13 @@ public class PresentationManager extends Observable {
         }
         return null;
     }
+
+    public PMSession getSessionByUser(final String username) {
+        for (PMSession s : sessions.values()) {
+            if (s.getUser() != null && s.getUser().getUsername().equals(username)) {
+                return s;
+            }
+        }
+        return null;
+    }
 }
