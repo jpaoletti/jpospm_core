@@ -1,6 +1,6 @@
 /*
  * jPOS Project [http://jpos.org]
- * Copyright (C) 2000-2010 Alejandro P. Revilla
+ * Copyright (C) 2000-2011 Alejandro P. Revilla
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -30,7 +30,7 @@ import java.util.Map;
  * {@code
  * <?xml version='1.0' ?>
  * <!DOCTYPE entity SYSTEM "cfg/entity.dtd">
- * <entity id="entity_id" clazz="the.entity.Class" >
+ * <entity id="entity_id" clazz="the.entity.Class" cached="true/false">
  *     <auditable>false</auditable>
  *     ...
  *     <operations>
@@ -105,12 +105,15 @@ public class Entity extends PMCoreObject {
     /**Avoid counting items*/
     private Boolean noCount;
     private List<Entity> weaks;
+    private boolean cached;
+    private PMCache cache;
 
     /**Default constructor*/
     public Entity() {
         super();
         fieldsbyid = null;
         extendzEntity = null;
+        cached = false;
     }
 
     /**
@@ -534,5 +537,24 @@ public class Entity extends PMCoreObject {
      */
     public boolean isWeak() {
         return getOwner() != null;
+    }
+
+    public boolean isCached() {
+        return cached;
+    }
+
+    public void setCached(boolean cached) {
+        this.cached = cached;
+    }
+
+    public void createCache() throws Exception {
+        if (isCached()) {
+            cache = new PMCache(this);
+            cache.reloadList();
+        }
+    }
+
+    public PMCache getCache() {
+        return cache;
     }
 }

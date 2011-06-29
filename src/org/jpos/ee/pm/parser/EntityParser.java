@@ -38,6 +38,7 @@ public class EntityParser extends ParserSupport {
         getXstream().useAttributeFor(Entity.class, "noCount");
         getXstream().useAttributeFor(Entity.class, "clazz");
         getXstream().useAttributeFor(Entity.class, "extendz");
+        getXstream().useAttributeFor(Entity.class, "cached");
 
         getXstream().alias("field", Field.class);
 
