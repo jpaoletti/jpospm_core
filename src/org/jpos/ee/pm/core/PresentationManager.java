@@ -575,8 +575,11 @@ public class PresentationManager extends Observable {
     private void createSessionChecker() {
         final Long timeout = cfg.getLong("session-timeout", 60 * 60) * 1000;
         final int interval = cfg.getInt("session-check-interval", 60 * 5) * 1000;
+        if (sessionChecker != null) {
+            sessionChecker.cancel();
+        }
         sessionChecker = new Timer();
-        sessionChecker.schedule(new TimerTask() {
+        sessionChecker.scheduleAtFixedRate(new TimerTask() {
 
             @Override
             public void run() {
@@ -603,7 +606,7 @@ public class PresentationManager extends Observable {
         return cfg.get("menu", "cfg/pm.menu.xml");
     }
 
-    public boolean isHideableHeader(){
+    public boolean isHideableHeader() {
         return cfg.getBoolean("hideable-header", false);
     }
 
