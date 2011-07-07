@@ -23,5 +23,7 @@ package org.jpos.ee.pm.core;
  * */
 public class EntitySupport {
 
-    
+    public PresentationManager getPM() {
+        return PresentationManager.getPm();
+    }
 }
