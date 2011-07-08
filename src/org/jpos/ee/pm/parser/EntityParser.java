@@ -71,6 +71,7 @@ public class EntityParser extends ParserSupport {
         getXstream().useAttributeFor(Highlight.class, "color");
         getXstream().useAttributeFor(Highlight.class, "value");
         getXstream().useAttributeFor(Highlight.class, "scope");
+        getXstream().useAttributeFor(Highlight.class, "style");
 
         getXstream().addImplicitCollection(Entity.class, "fields", Field.class);
         getXstream().addImplicitCollection(Field.class, "validators", Validator.class);
