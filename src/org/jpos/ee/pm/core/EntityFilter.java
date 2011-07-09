@@ -24,6 +24,7 @@ import java.util.Map;
 
 public class EntityFilter extends PMCoreObject {
 
+    private FilterBehavior behavior;
     private Map<String, FilterOperation> filterOperations;
     private Map<String, List<Object>> filterValues;
 
@@ -31,6 +32,7 @@ public class EntityFilter extends PMCoreObject {
      * Default constructor
      */
     public EntityFilter() {
+        behavior = FilterBehavior.AND;
         filterOperations = new HashMap<String, FilterOperation>();
         filterValues = new HashMap<String, List<Object>>();
     }
@@ -45,12 +47,12 @@ public class EntityFilter extends PMCoreObject {
     public void clear() {
     }
 
-    public void addFilter(String fieldId, List<Object> values, FilterOperation operation){
+    public void addFilter(String fieldId, List<Object> values, FilterOperation operation) {
         filterOperations.put(fieldId, operation);
         filterValues.put(fieldId, values);
     }
 
-    public void addFilter(String fieldId, Object value, FilterOperation operation){
+    public void addFilter(String fieldId, Object value, FilterOperation operation) {
         filterOperations.put(fieldId, operation);
         final List<Object> values = new ArrayList<Object>();
         values.add(value);
@@ -64,7 +66,6 @@ public class EntityFilter extends PMCoreObject {
     public Map<String, List<Object>> getFilterValues() {
         return filterValues;
     }
-    
 
     public void setFilterOperations(Map<String, FilterOperation> filterOperations) {
         this.filterOperations = filterOperations;
@@ -77,5 +78,13 @@ public class EntityFilter extends PMCoreObject {
         } else {
             return FilterOperation.LIKE;
         }
+    }
+
+    public FilterBehavior getBehavior() {
+        return behavior;
+    }
+
+    public void setBehavior(FilterBehavior behavior) {
+        this.behavior = behavior;
     }
 }
