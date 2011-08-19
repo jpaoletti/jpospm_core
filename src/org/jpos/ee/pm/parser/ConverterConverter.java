@@ -17,7 +17,6 @@
  */
 package org.jpos.ee.pm.parser;
 
-import com.thoughtworks.xstream.converters.ConversionException;
 import com.thoughtworks.xstream.converters.MarshallingContext;
 import com.thoughtworks.xstream.converters.UnmarshallingContext;
 import com.thoughtworks.xstream.io.HierarchicalStreamReader;
@@ -26,6 +25,7 @@ import java.util.ArrayList;
 import org.jpos.ee.pm.converter.Converter;
 import org.jpos.ee.pm.converter.Converters;
 import org.jpos.ee.pm.converter.ExternalConverter;
+import org.jpos.ee.pm.core.PresentationManager;
 
 /**
  * This is not a recursive class! This is an xstream converter for the
@@ -35,8 +35,9 @@ import org.jpos.ee.pm.converter.ExternalConverter;
  */
 public class ConverterConverter implements com.thoughtworks.xstream.converters.Converter {
 
+    @Override
     public void marshal(Object o, HierarchicalStreamWriter writer, MarshallingContext mc) {
-        Converters converters = (Converters) o;
+        final Converters converters = (Converters) o;
         writer.startNode("converters");
         for (Converter c : converters.getConverters()) {
             writer.startNode("converter");
@@ -51,21 +52,21 @@ public class ConverterConverter implements com.thoughtworks.xstream.converters.C
         writer.endNode();
     }
 
+    @Override
     public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext uc) {
-        Converters converters = new Converters();
+        final Converters converters = new Converters();
         converters.setConverters(new ArrayList<Converter>());
         converters.setExternalConverters(new ArrayList<ExternalConverter>());
         while (reader.hasMoreChildren()) {
             reader.moveDown();
             if (reader.getNodeName().equals("converter")) {
-                String clazz = reader.getAttribute("class");
-                Converter c;
+                final String clazz = reader.getAttribute("class");
                 try {
-                    c = (Converter) uc.convertAnother(converters, Class.forName(clazz));
-                } catch (ClassNotFoundException ex) {
-                    throw new ConversionException(ex);
+                    final Converter c = (Converter) uc.convertAnother(converters, Class.forName(clazz));
+                    converters.getConverters().add(c);
+                } catch (Exception ex) {
+                    PresentationManager.getPm().warn("Converter not found: " + clazz);
                 }
-                converters.getConverters().add(c);
             } else if (reader.getNodeName().equals("econverter")) {
                 ExternalConverter c = (ExternalConverter) uc.convertAnother(converters, ExternalConverter.class);
                 converters.getExternalConverters().add(c);
@@ -75,6 +76,7 @@ public class ConverterConverter implements com.thoughtworks.xstream.converters.C
         return converters;
     }
 
+    @Override
     public boolean canConvert(Class type) {
         return type.equals(Converters.class);
     }

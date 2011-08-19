@@ -1,6 +1,6 @@
 /*
  * jPOS Project [http://jpos.org]
- * Copyright (C) 2000-2010 Alejandro P. Revilla
+ * Copyright (C) 2000-2011 Alejandro P. Revilla
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -25,18 +25,22 @@ import java.io.FileReader;
  *
  * @author jpaoletti
  */
-public abstract class ParserSupport implements PMParser{
+public abstract class ParserSupport implements PMParser {
+
     private XStream xstream;
 
-    protected void init(){
+    protected void init() {
         xstream = new XStream(new JDomDriver());
     }
+
+    @Override
     public Object parseFile(String filename) throws Exception {
         init();
         return xstream.fromXML(new FileReader(filename), newObject());
     }
 
-    public void saveToFile(Object object, String filename) throws Exception{
+    @Override
+    public void saveToFile(Object object, String filename) throws Exception {
         init();
         //todo finish
         xstream.toXML(object);
@@ -47,5 +51,4 @@ public abstract class ParserSupport implements PMParser{
     }
 
     protected abstract Object newObject();
-
 }

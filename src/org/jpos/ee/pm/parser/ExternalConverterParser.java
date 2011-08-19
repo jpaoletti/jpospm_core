@@ -35,6 +35,8 @@ public class ExternalConverterParser extends ParserSupport {
         getXstream().useAttributeFor(ConverterWrapper.class, "id");
         getXstream().useAttributeFor(Converter.class, "operations");
         getXstream().useAttributeFor(Converter.class, "validate");
+
+        getXstream().registerConverter(new EConverterConverter());
     }
 
     @Override
