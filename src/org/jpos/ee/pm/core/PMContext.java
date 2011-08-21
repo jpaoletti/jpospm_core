@@ -264,6 +264,10 @@ public class PMContext extends Context {
         }
     }
 
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
+    }
+
     public Object[] getParameters(String paramid) {
         return (Object[]) get("param_" + paramid);
     }
