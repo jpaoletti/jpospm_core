@@ -522,17 +522,23 @@ public class PresentationManager extends Observable {
     }
 
     /**
-     * Creates a new session with the given id
+     * Creates a new session with the given id. If null is used, an automatic
+     * session id will be generated
+     *
      * @param sessionId The new session id. Must be unique.
      * @throws PMException on already defined session
      * @return New session
      */
     public PMSession registerSession(String sessionId) {
         synchronized (sessions) {
-            if (!sessions.containsKey(sessionId)) {
-                sessions.put(sessionId, new PMSession(sessionId));
+            if (sessionId != null) {
+                if (!sessions.containsKey(sessionId)) {
+                    sessions.put(sessionId, new PMSession(sessionId));
+                }
+                return getSession(sessionId);
+            } else {
+                return registerSession(newSessionId());
             }
-            return getSession(sessionId);
         }
     }
 
