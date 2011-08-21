@@ -202,7 +202,11 @@ public class PMContext extends Context {
      * @throws PMException
      */
     public EntityInstanceWrapper getSelected() throws PMException {
-        return getEntityContainer().getSelected();
+        final EntityContainer container = getEntityContainer(true);
+        if (container == null) {
+            return null;
+        }
+        return container.getSelected();
     }
 
     /**
