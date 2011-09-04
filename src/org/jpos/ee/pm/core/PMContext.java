@@ -19,6 +19,7 @@ package org.jpos.ee.pm.core;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.jpos.ee.pm.core.exception.ConnectionNotFoundException;
 import org.jpos.ee.pm.security.core.PMSecurityUser;
 
 import org.jpos.transaction.Context;
@@ -32,6 +33,7 @@ public class PMContext extends Context {
 
     private String sessionId;
     public static final String PM_ERRORS = "PM_ERRORS";
+    private PersistenceManager persistenceManager;
 
     public PMContext(String sessionId) {
         this.sessionId = sessionId;
@@ -65,11 +67,20 @@ public class PMContext extends Context {
     }
 
     /**
-     * Return the persistance manager of the PM
+     * Return the persistence manager
      * @return PersistenceManager
      */
-    public PersistenceManager getPersistenceManager() {
-        return getPresentationManager().getPersistenceManager();
+    public PersistenceManager getPersistenceManager(){
+        if (persistenceManager == null) {
+            try {
+                persistenceManager = getPresentationManager().newPersistenceManager();
+                persistenceManager.init(this);
+            } catch (Exception ex) {
+                getPresentationManager().error(ex);
+                throw new ConnectionNotFoundException();
+            }
+        }
+        return persistenceManager;
     }
 
     /**

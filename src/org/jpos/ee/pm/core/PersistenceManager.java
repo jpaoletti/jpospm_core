@@ -22,7 +22,9 @@ package org.jpos.ee.pm.core;
  *
  * @author jpaoletti jeronimo.paoletti@gmail.com
  */
-public interface PersistenceManager {
+public interface PersistenceManager<T> {
+
+    public T getConnection();
 
     /**
      * Initialize persistance

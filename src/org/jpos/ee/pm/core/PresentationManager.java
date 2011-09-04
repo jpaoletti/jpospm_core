@@ -45,7 +45,7 @@ public class PresentationManager extends Observable {
     private Map<String, MenuItemLocation> locations;
     private Map<Object, Monitor> monitors;
     private List<ExternalConverters> externalConverters;
-    private PersistenceManager persistenceManager;
+    private String persistenceManager;
     private boolean error;
     private Log log;
     private PMService service;
@@ -87,13 +87,13 @@ public class PresentationManager extends Observable {
             logItem(evt, "Login Required", Boolean.toString(isLoginRequired()), "*");
             logItem(evt, "Default Converter", getDefaultConverterClass(), "*");
 
-            final String tmp = cfg.get("persistence-manager", "org.jpos.ee.pm.core.PersistenceManagerVoid");
+            persistenceManager = cfg.get("persistence-manager", "org.jpos.ee.pm.core.PersistenceManagerVoid");
             try {
-                setPersistenceManager((PersistenceManager) newInstance(tmp));
-                logItem(evt, "Persistance Manager", tmp, "*");
+                newInstance(persistenceManager);
+                logItem(evt, "Persistance Manager", persistenceManager, "*");
             } catch (Exception e) {
                 error = true;
-                logItem(evt, "Persistance Manager", tmp, "?");
+                logItem(evt, "Persistance Manager", persistenceManager, "?");
             }
             evt.addMessage(TAB + "<configuration>");
 
@@ -369,19 +369,11 @@ public class PresentationManager extends Observable {
     }
 
     /**
-     * Getter for persistanteManager
+     * Create a new instance of the persistance manager
      * @return
      */
-    public PersistenceManager getPersistenceManager() {
-        return persistenceManager;
-    }
-
-    /**
-     * Setter for persistenceManager
-     * @param persistenceManager
-     */
-    public void setPersistenceManager(PersistenceManager persistenceManager) {
-        this.persistenceManager = persistenceManager;
+    public PersistenceManager newPersistenceManager() {
+        return (PersistenceManager) newInstance(persistenceManager);
     }
 
     /**

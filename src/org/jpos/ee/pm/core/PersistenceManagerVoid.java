@@ -24,7 +24,7 @@ package org.jpos.ee.pm.core;
  * @author jpaoletti
  *
  */
-public class PersistenceManagerVoid implements PersistenceManager {
+public class PersistenceManagerVoid implements PersistenceManager<Object> {
 
     /**
      * Inherited. Just do nothing
@@ -32,6 +32,7 @@ public class PersistenceManagerVoid implements PersistenceManager {
      * @param transaction
      * @throws Exception
      */
+    @Override
     public void commit(PMContext ctx, Object transaction) throws Exception {
 
     }
@@ -41,6 +42,7 @@ public class PersistenceManagerVoid implements PersistenceManager {
      * @param ctx
      * @throws Exception
      */
+    @Override
     public void finish(PMContext ctx) throws Exception {
 
     }
@@ -50,6 +52,7 @@ public class PersistenceManagerVoid implements PersistenceManager {
      * @param ctx
      * @throws Exception
      */
+    @Override
     public void init(PMContext ctx) throws Exception {
 
     }
@@ -60,6 +63,7 @@ public class PersistenceManagerVoid implements PersistenceManager {
      * @param transaction
      * @throws Exception
      */
+    @Override
     public void rollback(PMContext ctx, Object transaction) throws Exception {
     
     }
@@ -70,7 +74,13 @@ public class PersistenceManagerVoid implements PersistenceManager {
      * @return
      * @throws Exception
      */
+    @Override
     public Object startTransaction(PMContext ctx) throws Exception {
+        return null;
+    }
+
+    @Override
+    public Object getConnection() {
         return null;
     }
 }
