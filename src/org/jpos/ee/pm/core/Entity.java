@@ -106,7 +106,6 @@ public class Entity extends PMCoreObject {
     private Boolean noCount;
     private List<Entity> weaks;
     private boolean cached;
-    private PMCache cache;
 
     /**Default constructor*/
     public Entity() {
@@ -545,16 +544,5 @@ public class Entity extends PMCoreObject {
 
     public void setCached(boolean cached) {
         this.cached = cached;
-    }
-
-    public void createCache() throws Exception {
-        if (isCached()) {
-            cache = new PMCache(this);
-            cache.reloadList();
-        }
-    }
-
-    public PMCache getCache() {
-        return cache;
     }
 }
