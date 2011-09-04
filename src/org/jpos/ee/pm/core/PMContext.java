@@ -45,6 +45,13 @@ public class PMContext extends Context {
     }
 
     /**
+     * Shortcut for getEntity().getDataAccess()
+     */
+    public DataAccess getDataAccess() throws PMException {
+        return getEntity().getDataAccess();
+    }
+
+    /**
      * @return the errors
      */
     public List<PMMessage> getErrors() {
@@ -70,7 +77,7 @@ public class PMContext extends Context {
      * Return the persistence manager
      * @return PersistenceManager
      */
-    public PersistenceManager getPersistenceManager(){
+    public PersistenceManager getPersistenceManager() {
         if (persistenceManager == null) {
             try {
                 persistenceManager = getPresentationManager().newPersistenceManager();
