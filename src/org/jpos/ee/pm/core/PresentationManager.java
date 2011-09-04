@@ -90,7 +90,7 @@ public class PresentationManager extends Observable {
             final String tmp = cfg.get("persistence-manager", "org.jpos.ee.pm.core.PersistenceManagerVoid");
             try {
                 setPersistenceManager((PersistenceManager) newInstance(tmp));
-                logItem(evt, "Persistance Manager", getPersistenceManager().getClass().getName(), "*");
+                logItem(evt, "Persistance Manager", tmp, "*");
             } catch (Exception e) {
                 error = true;
                 logItem(evt, "Persistance Manager", tmp, "?");

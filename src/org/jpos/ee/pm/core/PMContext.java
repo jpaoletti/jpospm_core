@@ -68,7 +68,7 @@ public class PMContext extends Context {
      * Return the persistance manager of the PM
      * @return PersistenceManager
      */
-    public PersistenceManager getPersistanceManager() {
+    public PersistenceManager getPersistenceManager() {
         return getPresentationManager().getPersistenceManager();
     }
 
