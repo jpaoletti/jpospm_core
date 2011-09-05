@@ -17,7 +17,6 @@
  */
 package org.jpos.ee.pm.core.operations;
 
-import org.jpos.ee.BLException;
 import org.jpos.ee.pm.core.PMContext;
 import org.jpos.ee.pm.core.PMException;
 import org.jpos.ee.pm.core.PMSession;
@@ -90,7 +89,6 @@ public class LoginOperation extends OperationCommandSupport {
     /**
      * @param ctx The context with all the parameters
      * @return The user
-     * @throws BLException
      */
     private PMSecurityUser authenticate(PMContext ctx) throws PMSecurityException {
         PMSecurityUser u = null;
