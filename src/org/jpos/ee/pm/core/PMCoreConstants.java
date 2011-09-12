@@ -25,7 +25,6 @@ public interface PMCoreConstants {
 
     public static final String ENTITY = "entity";
     public static final String PM_OWNER = "PM_OWNER";
-    public static final String PM_FIELD = "PM_FIELD";
     public static final String PM_FIELD_VALUE = "PM_FIELD_VALUE";
     public static final String PM_CONTEXT = "PM_CONTEXT";
     public static final String PM_LIST_ORDER = "PM_LIST_ORDER";

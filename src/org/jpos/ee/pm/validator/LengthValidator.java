@@ -17,7 +17,6 @@
  */
 package org.jpos.ee.pm.validator;
 
-import org.jpos.ee.pm.core.Field;
 import org.jpos.ee.pm.core.PMContext;
 import org.jpos.ee.pm.core.PMCoreObject;
 import org.jpos.ee.pm.core.PMMessage;
@@ -33,36 +32,33 @@ import org.jpos.ee.pm.core.PMMessage;
 public class LengthValidator extends ValidatorSupport {
 
     /**The validate method*/
+    @Override
     public ValidationResult validate(PMContext ctx) {
-        ValidationResult res = new ValidationResult();
-        Field field = (Field) ctx.get(PMCoreObject.PM_FIELD);
-        Object object = ctx.get(PMCoreObject.PM_FIELD_VALUE);
-
-        System.out.println("OBJECT " + object);
+        final ValidationResult res = new ValidationResult();
+        final Object object = ctx.get(PMCoreObject.PM_FIELD_VALUE);
+        final String fieldId = ctx.getField().getId();
 
         if (object instanceof String) {
             String fieldvalue = (String) object;
-
             res.setSuccessful(true);
-
             Integer len = fieldvalue.length();
             Integer maxl = getInt("max-length");
             if (maxl != null) {
                 if (len > maxl) {
                     res.setSuccessful(false);
-                    res.getMessages().add(new PMMessage(field.getId(), get("max-length-msg", "pm_core.validator.toolong"), field.getId(), len.toString(), maxl.toString()));
+                    res.getMessages().add(new PMMessage(fieldId,get("max-length-msg", "pm_core.validator.toolong"), fieldId, len.toString(), maxl.toString()));
                 }
             }
             Integer minl = getInt("min-length");
             if (minl != null) {
                 if (len < minl) {
                     res.setSuccessful(false);
-                    res.getMessages().add(new PMMessage(field.getId(), get("min-length-msg", "pm_core.validator.tooshort"), field.getId(), len.toString(), minl.toString()));
+                    res.getMessages().add(new PMMessage(fieldId,get("min-length-msg", "pm_core.validator.tooshort"), fieldId, len.toString(), minl.toString()));
                 }
             }
         } else {
             res.setSuccessful(false);
-            res.getMessages().add(new PMMessage(field.getId(), "pm_core.validator.fieldnotstring", field.getId()));
+            res.getMessages().add(new PMMessage(fieldId, "pm_core.validator.fieldnotstring", fieldId));
         }
         return res;
     }

@@ -21,7 +21,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import org.jpos.ee.pm.core.Field;
 import org.jpos.ee.pm.core.PMContext;
 
 /**Converter for date.<br>
@@ -38,17 +37,16 @@ import org.jpos.ee.pm.core.PMContext;
  * @author J.Paoletti jeronimo.paoletti@gmail.com
  * */
 public class ShowDateConverter extends Converter {
-    
+
     @Override
     public Object build(PMContext ctx) throws ConverterException {
         throw new IgnoreConvertionException("");
     }
-    
+
     @Override
     public String visualize(PMContext ctx) throws ConverterException {
-        final Field field = (Field) ctx.get(PM_FIELD);
-        final Date o = (Date) getValue(ctx.getEntityInstance(), field);
-        return (o==null)?"":getDateFormat().format(o);
+        final Date o = (Date) getValue(ctx.getEntityInstance(), ctx.getField());
+        return (o == null) ? "" : getDateFormat().format(o);
     }
 
     /**
@@ -56,7 +54,7 @@ public class ShowDateConverter extends Converter {
      * @return the DateFormat object with the configured date format
      */
     protected DateFormat getDateFormat() {
-        DateFormat df = new SimpleDateFormat (getConfig("format", "MM/dd/yyyy"));
+        DateFormat df = new SimpleDateFormat(getConfig("format", "MM/dd/yyyy"));
         return df;
     }
 }

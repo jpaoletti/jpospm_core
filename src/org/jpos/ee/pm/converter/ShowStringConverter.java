@@ -17,7 +17,6 @@
  */
 package org.jpos.ee.pm.converter;
 
-import org.jpos.ee.pm.core.Field;
 import org.jpos.ee.pm.core.PMContext;
 
 /**Converter for strings <br>
@@ -60,8 +59,7 @@ public class ShowStringConverter extends Converter {
 
     @Override
     public String visualize(PMContext ctx) throws ConverterException {
-        final Field field = (Field) ctx.get(PM_FIELD);
-        final Object o = getValue(ctx.getEntityInstance(), field);
+        final Object o = getValue(ctx.getEntityInstance(), ctx.getField());
         return visualize(o, ctx.getString(PM_EXTRA_DATA));
     }
 }

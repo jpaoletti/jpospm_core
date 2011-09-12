@@ -83,7 +83,7 @@ public class Field extends PMCoreObject {
             }
             final Object instance = ctx.getEntityInstance();
             ctx.setEntityInstanceWrapper(new EntityInstanceWrapper(instance));
-            ctx.put(PM_FIELD, this);
+            ctx.setField(this);
             if (ctx.get(PM_FIELD_VALUE) == null) {
                 ctx.put(PM_FIELD_VALUE, getPresentationManager().get(instance, getProperty()));
             }
