@@ -20,7 +20,6 @@ package org.jpos.ee.pm.core.operations;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import org.jpos.ee.Constants;
 import org.jpos.ee.pm.converter.Converter;
 import org.jpos.ee.pm.converter.ConverterException;
 import org.jpos.ee.pm.converter.IgnoreConvertionException;
@@ -35,11 +34,10 @@ import org.jpos.util.Logger;
  *
  * @author jpaoletti
  */
-public class OperationCommandSupport implements OperationCommand {
+public class OperationCommandSupport extends PMCoreObject implements OperationCommand {
 
     public static final String UNESPECTED_ERROR = "pm_core.unespected.error";
     public static final String FINISH = "finish";
-    public static final String PM_ENTITY_INSTANCE = "PM_ENTITY_INSTANCE";
     public static final String LAST_PM_ID = "LAST_PM_ID";
     public static final String PM_ID = "PM_ID";
     public static final String OPERATIONS = "operations";
@@ -375,9 +373,9 @@ public class OperationCommandSupport implements OperationCommand {
         if (converter == null) {
             throw new IgnoreConvertionException();
         }
-        ctx.put(Constants.PM_FIELD, field);
-        ctx.put(Constants.PM_FIELD_VALUE, values);
-        ctx.put(Constants.PM_ENTITY_INSTANCE_WRAPPER, wrapper);
+        ctx.put(PM_FIELD, field);
+        ctx.put(PM_FIELD_VALUE, values);
+        ctx.put(PM_ENTITY_INSTANCE_WRAPPER, wrapper);
         final Object converted = converter.build(ctx);
         return converted;
     }
@@ -386,9 +384,9 @@ public class OperationCommandSupport implements OperationCommand {
         boolean ok = true;
         if (field.getValidators() != null) {
             for (Validator fv : field.getValidators()) {
-                ctx.put(Constants.PM_ENTITY_INSTANCE, wrapper.getInstance());
-                ctx.put(Constants.PM_FIELD, field);
-                ctx.put(Constants.PM_FIELD_VALUE, o);
+                ctx.put(PM_ENTITY_INSTANCE, wrapper.getInstance());
+                ctx.put(PM_FIELD, field);
+                ctx.put(PM_FIELD_VALUE, o);
                 ValidationResult vr = fv.validate(ctx);
                 ctx.getErrors().addAll(vr.getMessages());
                 ok = ok && vr.isSuccessful();

@@ -17,7 +17,6 @@
  */
 package org.jpos.ee.pm.core.operations;
 
-import org.jpos.ee.Constants;
 import org.jpos.ee.pm.core.*;
 
 /**
@@ -51,8 +50,8 @@ public class ListOperation extends OperationCommandSupport {
             pmlist.setRowsPerPage(rpp);
         }
 
-        ctx.put(Constants.PM_LIST_ORDER, pmlist.getOrder());
-        ctx.put(Constants.PM_LIST_ASC, !pmlist.isDesc());
+        ctx.put(PM_LIST_ORDER, pmlist.getOrder());
+        ctx.put(PM_LIST_ASC, !pmlist.isDesc());
         listManager.configureList(ctx, pmlist, operations);
     }
 

@@ -24,6 +24,7 @@ import org.jpos.ee.pm.core.Field;
 import org.jpos.ee.pm.core.PMContext;
 import org.jpos.ee.pm.core.PMCoreObject;
 import org.jpos.ee.pm.core.PresentationManager;
+import org.jpos.ee.pm.struts.PMStrutsConstants;
 import org.jpos.iso.ISOException;
 import org.jpos.iso.ISOUtil;
 
@@ -47,7 +48,7 @@ import org.jpos.iso.ISOUtil;
  * </pre>
  * @author J.Paoletti jeronimo.paoletti@gmail.com
  **/
-public class Converter extends PMCoreObject {
+public class Converter extends PMCoreObject implements PMStrutsConstants {
 
     private String operations;
     private Properties properties;
@@ -199,7 +200,9 @@ public class Converter extends PMCoreObject {
     }
 
     public Boolean getValidate() {
-        if(validate==null) return true;
+        if (validate == null) {
+            return true;
+        }
         return validate;
     }
 

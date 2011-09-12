@@ -17,9 +17,6 @@
  */
 package org.jpos.ee.pm.core.operations;
 
-import org.jpos.ee.Constants;
-import org.jpos.ee.pm.core.ListManager;
-import org.jpos.ee.pm.core.Operations;
 import org.jpos.ee.pm.core.PMContext;
 import org.jpos.ee.pm.core.PMException;
 

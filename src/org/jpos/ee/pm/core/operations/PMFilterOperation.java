@@ -19,7 +19,6 @@ package org.jpos.ee.pm.core.operations;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.jpos.ee.Constants;
 import org.jpos.ee.pm.converter.*;
 import org.jpos.ee.pm.core.*;
 import org.jpos.util.DisplacedList;
@@ -62,8 +61,8 @@ public class PMFilterOperation extends OperationCommandSupport {
         PaginatedList pmlist = ctx.getList();
         DisplacedList<Object> contents = new DisplacedList<Object>();
         Long total = null;
-        ctx.put(Constants.PM_LIST_ORDER, pmlist.getOrder());
-        ctx.put(Constants.PM_LIST_ASC, !pmlist.isDesc());
+        ctx.put(PM_LIST_ORDER, pmlist.getOrder());
+        ctx.put(PM_LIST_ASC, !pmlist.isDesc());
         contents.addAll((List<Object>) ctx.getEntity().getList(ctx, ctx.getEntityContainer().getFilter(), pmlist.from(), pmlist.rpp()));
         if (!ctx.getEntity().getNoCount()) {
             total = ctx.getEntity().getDataAccess().count(ctx);
