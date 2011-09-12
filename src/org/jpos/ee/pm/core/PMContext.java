@@ -1,6 +1,6 @@
 /*
  * jPOS Project [http://jpos.org]
- * Copyright (C) 2000-2010 Alejandro P. Revilla
+ * Copyright (C) 2000-2011 Alejandro P. Revilla
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -37,6 +37,7 @@ public class PMContext extends Context {
     private EntityContainer entityContainer;
     private Operation operation;
     private Object entityInstance;
+    private EntityInstanceWrapper entityInstanceWrapper;
 
     public PMContext(String sessionId) {
         this.sessionId = sessionId;
@@ -389,5 +390,13 @@ public class PMContext extends Context {
 
     public void setEntityInstance(Object entityInstance) {
         this.entityInstance = entityInstance;
+    }
+
+    public EntityInstanceWrapper getEntityInstanceWrapper() {
+        return entityInstanceWrapper;
+    }
+
+    public void setEntityInstanceWrapper(EntityInstanceWrapper entityInstanceWrapper) {
+        this.entityInstanceWrapper = entityInstanceWrapper;
     }
 }

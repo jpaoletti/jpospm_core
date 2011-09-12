@@ -1,6 +1,6 @@
 /*
  * jPOS Project [http://jpos.org]
- * Copyright (C) 2000-2010 Alejandro P. Revilla
+ * Copyright (C) 2000-2011 Alejandro P. Revilla
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -28,7 +28,6 @@ public interface PMCoreConstants {
     public static final String PM_FIELD = "PM_FIELD";
     public static final String PM_FIELD_VALUE = "PM_FIELD_VALUE";
     public static final String PM_CONTEXT = "PM_CONTEXT";
-    public static final String PM_ENTITY_INSTANCE_WRAPPER = "PM_ENTITY_INSTANCE_WRAPPER";
     public static final String PM_LIST_ORDER = "PM_LIST_ORDER";
     public static final boolean PM_LIST_ASC = true;
     public static final String PM_EXTRA_DATA = "PM_EXTRA_DATA";

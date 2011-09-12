@@ -374,7 +374,7 @@ public class OperationCommandSupport extends PMCoreObject implements OperationCo
         }
         ctx.put(PM_FIELD, field);
         ctx.put(PM_FIELD_VALUE, values);
-        ctx.put(PM_ENTITY_INSTANCE_WRAPPER, wrapper);
+        ctx.setEntityInstanceWrapper(wrapper);
         final Object converted = converter.build(ctx);
         return converted;
     }

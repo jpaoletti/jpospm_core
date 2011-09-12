@@ -19,7 +19,6 @@ package org.jpos.ee.pm.converter;
 
 import java.io.InputStream;
 
-import org.jpos.ee.pm.core.EntityInstanceWrapper;
 import org.jpos.ee.pm.core.Field;
 import org.jpos.ee.pm.core.PMContext;
 
@@ -44,10 +43,9 @@ public class GenericConverter extends Converter {
     @Override
     public String visualize(PMContext ctx) throws ConverterException {
         try {
-            Interpreter bash = getBsh();
-            EntityInstanceWrapper einstance = (EntityInstanceWrapper) ctx.get(PM_ENTITY_INSTANCE_WRAPPER);
-            Field field = (Field) ctx.get(PM_FIELD);
-            Object o = getValue(einstance, field);
+            final Interpreter bash = getBsh();
+            final Field field = (Field) ctx.get(PM_FIELD);
+            final Object o = getValue(ctx.getEntityInstanceWrapper(), field);
             bash.set("value", o);
             bash.set("converter", this);
             debug("Generic Converter Visualize value: " + o);

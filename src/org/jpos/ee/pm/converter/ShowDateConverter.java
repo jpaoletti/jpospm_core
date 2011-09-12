@@ -21,7 +21,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import org.jpos.ee.pm.core.EntityInstanceWrapper;
 import org.jpos.ee.pm.core.Field;
 import org.jpos.ee.pm.core.PMContext;
 
@@ -47,9 +46,8 @@ public class ShowDateConverter extends Converter {
     
     @Override
     public String visualize(PMContext ctx) throws ConverterException {
-        EntityInstanceWrapper einstance = (EntityInstanceWrapper) ctx.get(PM_ENTITY_INSTANCE_WRAPPER);
-        Field field = (Field) ctx.get(PM_FIELD);
-        Date o = (Date) getValue(einstance.getInstance(), field);
+        final Field field = (Field) ctx.get(PM_FIELD);
+        final Date o = (Date) getValue(ctx.getEntityInstance(), field);
         return (o==null)?"":getDateFormat().format(o);
     }
 

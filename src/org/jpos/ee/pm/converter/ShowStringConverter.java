@@ -1,6 +1,6 @@
 /*
  * jPOS Project [http://jpos.org]
- * Copyright (C) 2000-2010 Alejandro P. Revilla
+ * Copyright (C) 2000-2011 Alejandro P. Revilla
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -17,7 +17,6 @@
  */
 package org.jpos.ee.pm.converter;
 
-import org.jpos.ee.pm.core.EntityInstanceWrapper;
 import org.jpos.ee.pm.core.Field;
 import org.jpos.ee.pm.core.PMContext;
 
@@ -38,27 +37,31 @@ import org.jpos.ee.pm.core.PMContext;
 public class ShowStringConverter extends Converter {
 
     @Override
-    public Object build(PMContext ctx) throws ConverterException{
+    public Object build(PMContext ctx) throws ConverterException {
         throw new IgnoreConvertionException("");
     }
 
     @Override
-    public String visualize(Object obj, String extra) throws ConverterException{
+    public String visualize(Object obj, String extra) throws ConverterException {
         String prefix = getConfig("prefix");
         String suffix = getConfig("suffix");
         String res = obj != null ? obj.toString() : "";
-        if(!res.equals("")){
-            if(prefix!=null) res = prefix + res;
-            if(suffix!=null) res = res+suffix;
+        if (!res.equals("")) {
+            if (prefix != null) {
+                res = prefix + res;
+            }
+            if (suffix != null) {
+                res = res + suffix;
+            }
         }
         return res;
-        
+
     }
+
     @Override
     public String visualize(PMContext ctx) throws ConverterException {
-        EntityInstanceWrapper einstance = (EntityInstanceWrapper) ctx.get(PM_ENTITY_INSTANCE_WRAPPER);
-        Field field = (Field) ctx.get(PM_FIELD);
-        Object o = getValue(einstance.getInstance(), field);
+        final Field field = (Field) ctx.get(PM_FIELD);
+        final Object o = getValue(ctx.getEntityInstance(), field);
         return visualize(o, ctx.getString(PM_EXTRA_DATA));
     }
 }
