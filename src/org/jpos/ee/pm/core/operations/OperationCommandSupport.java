@@ -148,9 +148,8 @@ public class OperationCommandSupport extends PMCoreObject implements OperationCo
         if (ctx.getBoolean("validate", true)) {
             if (ctx.getOperation() != null && ctx.getOperation().getValidators() != null && ctx.getSelected() != null) {
                 for (Validator ev : ctx.getOperation().getValidators()) {
-                    ctx.put(PM_ENTITY_INSTANCE, ctx.getSelected().getInstance());
+                    ctx.setEntityInstance(ctx.getSelected().getInstance());
                     ValidationResult vr = ev.validate(ctx);
-
                     ctx.getErrors().addAll(vr.getMessages());
                     if (!vr.isSuccessful()) {
                         throw new PMException();
@@ -384,7 +383,7 @@ public class OperationCommandSupport extends PMCoreObject implements OperationCo
         boolean ok = true;
         if (field.getValidators() != null) {
             for (Validator fv : field.getValidators()) {
-                ctx.put(PM_ENTITY_INSTANCE, wrapper.getInstance());
+                ctx.setEntityInstance(wrapper.getInstance());
                 ctx.put(PM_FIELD, field);
                 ctx.put(PM_FIELD_VALUE, o);
                 ValidationResult vr = fv.validate(ctx);

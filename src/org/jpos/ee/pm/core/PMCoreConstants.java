@@ -24,11 +24,8 @@ package org.jpos.ee.pm.core;
 public interface PMCoreConstants {
 
     public static final String ENTITY = "entity";
-    public static final String PM_OPERATION = "PM_OPERATION";
-    public static final String PM_ENTITY_CONTAINER = "PM_ENTITY_CONTAINER";
     public static final String PM_OWNER = "PM_OWNER";
     public static final String PM_FIELD = "PM_FIELD";
-    public static final String PM_ENTITY_INSTANCE = "PM_ENTITY_INSTANCE";
     public static final String PM_FIELD_VALUE = "PM_FIELD_VALUE";
     public static final String PM_CONTEXT = "PM_CONTEXT";
     public static final String PM_ENTITY_INSTANCE_WRAPPER = "PM_ENTITY_INSTANCE_WRAPPER";

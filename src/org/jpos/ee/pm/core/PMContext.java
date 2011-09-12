@@ -32,8 +32,11 @@ import org.jpos.util.Log;
 public class PMContext extends Context {
 
     private String sessionId;
-    public static final String PM_ERRORS = "PM_ERRORS";
     private PersistenceManager persistenceManager;
+    private List<PMMessage> errors;
+    private EntityContainer entityContainer;
+    private Operation operation;
+    private Object entityInstance;
 
     public PMContext(String sessionId) {
         this.sessionId = sessionId;
@@ -55,14 +58,14 @@ public class PMContext extends Context {
      * @return the errors
      */
     public List<PMMessage> getErrors() {
-        return (List<PMMessage>) get(PM_ERRORS);
+        return errors;
     }
 
     /**
      * @param errors the errors to set
      */
     public final void setErrors(List<PMMessage> errors) {
-        put(PM_ERRORS, errors);
+        this.errors = errors;
     }
 
     /**
@@ -102,7 +105,7 @@ public class PMContext extends Context {
      * @param entityContainer the entity_container to set
      */
     public void setEntityContainer(EntityContainer entityContainer) {
-        put(PMCoreObject.PM_ENTITY_CONTAINER, entityContainer);
+        this.entityContainer = entityContainer;
     }
 
     /**
@@ -110,7 +113,6 @@ public class PMContext extends Context {
      * @throws PMException
      */
     public EntityContainer getEntityContainer() throws PMException {
-        EntityContainer entityContainer = (EntityContainer) get(PMCoreObject.PM_ENTITY_CONTAINER);
         if (entityContainer == null) {
             PresentationManager.getPm().error("Entity container not found");
             throw new PMException("pm_core.entity.not.found");
@@ -140,7 +142,6 @@ public class PMContext extends Context {
      * @throws PMException
      */
     public EntityContainer getEntityContainer(boolean ignorenull) throws PMException {
-        EntityContainer entityContainer = (EntityContainer) get(PMCoreObject.PM_ENTITY_CONTAINER);
         if (ignorenull) {
             return entityContainer;
         }
@@ -156,7 +157,6 @@ public class PMContext extends Context {
      * @return true if there is a container in the context
      */
     public boolean hasEntityContainer() {
-        EntityContainer entityContainer = (EntityContainer) get(PMCoreObject.PM_ENTITY_CONTAINER);
         return entityContainer != null;
     }
 
@@ -164,14 +164,14 @@ public class PMContext extends Context {
      * @param operation the operation to set
      */
     public void setOperation(Operation operation) {
-        put(PMCoreObject.PM_OPERATION, operation);
+        this.operation = operation;
     }
 
     /**
      * @return the operation
      */
     public Operation getOperation() {
-        return (Operation) get(PMCoreObject.PM_OPERATION);
+        return operation;
     }
 
     /**
@@ -381,5 +381,13 @@ public class PMContext extends Context {
         public void setValue(Object value) {
             this.value = value;
         }
+    }
+
+    public Object getEntityInstance() {
+        return entityInstance;
+    }
+
+    public void setEntityInstance(Object entityInstance) {
+        this.entityInstance = entityInstance;
     }
 }
