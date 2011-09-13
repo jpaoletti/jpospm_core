@@ -24,6 +24,8 @@ import org.jpos.ee.pm.converter.Converter;
 import org.jpos.ee.pm.converter.ConverterException;
 import org.jpos.ee.pm.converter.IgnoreConvertionException;
 import org.jpos.ee.pm.core.*;
+import org.jpos.ee.pm.core.exception.NotAuthenticatedException;
+import org.jpos.ee.pm.core.exception.NotAuthorizedException;
 import org.jpos.ee.pm.validator.ValidationResult;
 import org.jpos.ee.pm.validator.Validator;
 import org.jpos.util.DisplacedList;
@@ -52,11 +54,14 @@ public class OperationCommandSupport extends PMCoreObject implements OperationCo
     protected boolean prepare(PMContext ctx) throws PMException {
         //No session or no user when user is required.
         if (ctx.getPMSession() == null || (checkUser() && ctx.getUser() == null)) {
-            throw new PMUnauthorizedException();
+            throw new NotAuthenticatedException();
         }
         configureEntityContainer(ctx);
         configureSelected(ctx);
         operation = configureOperations(ctx);
+        if (operation.getPerm() != null && !ctx.getUser().hasPermission(operation.getPerm())) {
+            throw new NotAuthorizedException();
+        }
         //Try to refresh selected object, if there is one
         refreshSelectedObject(ctx, null);
         return true;
