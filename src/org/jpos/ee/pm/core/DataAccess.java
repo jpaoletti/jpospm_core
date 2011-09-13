@@ -20,11 +20,22 @@ package org.jpos.ee.pm.core;
 import java.util.List;
 
 /**
- * An entity data access offers the basic methods to operate over the data source of an entity.
+ * An entity data access offers the basic methods to operate over the data
+ * source of an entity.
  * 
  * @author jpaoletti
  * */
 public interface DataAccess {
+
+    /**
+     * Setter for the entity
+     */
+    public void setEntity(Entity entity);
+
+    /**
+     * Getter for the entity
+     */
+    public Entity getEntity();
 
     /**Get an item from data source an item identified by the property=value
      *

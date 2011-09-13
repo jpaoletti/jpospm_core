@@ -9,41 +9,52 @@ import java.util.List;
  * */
 public class DataAccessVoid implements DataAccess {
 
-	
-	public void add(PMContext ctx, Object instance) throws PMException {
+    private Entity entity;
 
-	}
+    @Override
+    public void add(PMContext ctx, Object instance) throws PMException {
+    }
 
-	
-	public Long count(PMContext ctx) throws PMException {
-		return 0L;
-	}
+    @Override
+    public Long count(PMContext ctx) throws PMException {
+        return 0L;
+    }
 
-	
-	public EntityFilter createFilter(PMContext ctx) throws PMException {
-		return new EntityFilter();
-	}
+    @Override
+    public EntityFilter createFilter(PMContext ctx) throws PMException {
+        return new EntityFilter();
+    }
 
-	
-	public void delete(PMContext ctx, Object object) throws PMException {
+    @Override
+    public void delete(PMContext ctx, Object object) throws PMException {
+    }
 
-	}
+    @Override
+    public Object getItem(PMContext ctx, String property, String value) throws PMException {
+        return null;
+    }
 
-	
-	public Object getItem(PMContext ctx, String property, String value)throws PMException {
-		return null;
-	}
+    @Override
+    public List<?> list(PMContext ctx, EntityFilter filter, Integer from, Integer count) throws PMException {
+        return new ArrayList<Object>();
+    }
 
-	public List<?> list(PMContext ctx, EntityFilter filter, Integer from,Integer count) throws PMException {
-		return new ArrayList<Object>();
-	}
+    @Override
+    public Object refresh(PMContext ctx, Object o) throws PMException {
+        return o;
+    }
 
-	public Object refresh(PMContext ctx, Object o) throws PMException {
-		return o;
-	}
+    @Override
+    public void update(PMContext ctx, Object instance) throws PMException {
+    }
 
-	
-	public void update(PMContext ctx, Object instance) throws PMException {
+    @Override
+    public void setEntity(Entity entity) {
+        this.entity = entity;
+    }
 
-	}
+    @Override
+    public Entity getEntity() {
+        return entity;
+    }
 }

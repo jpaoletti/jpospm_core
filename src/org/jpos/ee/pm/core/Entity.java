@@ -166,7 +166,7 @@ public class Entity extends PMCoreObject {
     }
 
     /**
-     * Returns a list taken from dataaccess with the given parameters.
+     * Returns a list taken from data access with the given parameters.
      * 
      * @param ctx The context
      * @param filter A filter
@@ -176,10 +176,7 @@ public class Entity extends PMCoreObject {
      * @throws PMException
      */
     public List<?> getList(PMContext ctx, EntityFilter filter, Integer from, Integer count) throws PMException {
-        ctx.put(PM_ENTITY, this);
-        List<?> list = getDataAccess().list(ctx, filter, from, count);
-        ctx.put(PM_ENTITY, null);
-        return list;
+        return getDataAccess().list(ctx, filter, from, count);
     }
 
     /**Getter for a field by its id
@@ -411,19 +408,13 @@ public class Entity extends PMCoreObject {
     }
 
     /**
-     * @param dataAccess the dataAccess to set
-     */
-    public void setDataAccess(DataAccess dataAccess) {
-        this.dataAccess = dataAccess;
-    }
-
-    /**
      * @return the dataAccess
      */
     public DataAccess getDataAccess() {
         if (dataAccess == null) {
             try {
-                dataAccess = (DataAccess) PresentationManager.pm.newInstance(PresentationManager.pm.getDefaultDataAccess());
+                dataAccess = (DataAccess) PresentationManager.getPm().newInstance(PresentationManager.getPm().getDefaultDataAccess());
+                dataAccess.setEntity(this);
             } catch (Exception e) {
                 getPresentationManager().error(e);
             }
