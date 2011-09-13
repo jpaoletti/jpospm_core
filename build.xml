@@ -43,7 +43,7 @@
 
 	<target name="prepare">
          <echo message="Presentation Manager: Building properties files"/>
-		 <delete>
+		 <delete failonerror="false">
 		    <path>
 		        <fileset dir="${build.src}/org/jpos/ee/">
 		            <include name="ApplicationResource*.properties"/>
