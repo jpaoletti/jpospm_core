@@ -20,6 +20,7 @@ package org.jpos.ee.pm.core;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import org.jpos.ee.pm.core.operations.OperationScope;
 
 /**
  * Just a container for a list of operations and some helpers.
@@ -77,32 +78,32 @@ public class Operations extends PMCoreObject {
     }
 
     public Operations getItemOperations() {
-        return getOperationsForScope(SCOPE_ITEM);
+        return getOperationsForScope(OperationScope.ITEM);
     }
 
     public Operations getGeneralOperations() {
-        return getOperationsForScope(SCOPE_GRAL);
+        return getOperationsForScope(OperationScope.GENERAL);
     }
 
-    /**Returns an Operations object for the given scope
+    /**
+     * Returns an Operations object for the given scope
      * @param scopes The scopes
      * @return The Operations
-     *  */
-    public Operations getOperationsForScope(String... scopes) {
+     */
+    public Operations getOperationsForScope(OperationScope... scopes) {
         Operations result = new Operations();
         List<Operation> r = new ArrayList<Operation>();
         for (Operation op : getOperations()) {
             if (op.getScope() != null) {
                 String s = op.getScope().trim();
                 for (int i = 0; i < scopes.length; i++) {
-                    String scope = scopes[i];
-                    if (s.compareTo(scope) == 0) {
+                    OperationScope scope = scopes[i];
+                    if (scope.is(s)) {
                         r.add(op);
                         break;
                     }
                 }
             }
-
         }
         result.setOperations(r);
         return result;

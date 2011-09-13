@@ -18,6 +18,7 @@
 package org.jpos.ee.pm.core;
 
 import java.util.List;
+import org.jpos.ee.pm.core.operations.OperationScope;
 import org.jpos.util.DisplacedList;
 
 /**
@@ -35,7 +36,7 @@ public class ListManager {
         pmlist.setRowsPerPage(Integer.parseInt(ctx.getOperation().getConfig("rows-per-page", "10")));
 
         pmlist.setEntity(ctx.getEntity());
-        pmlist.setOperations(operations.getOperationsForScope(PMCoreObject.SCOPE_GRAL, PMCoreObject.SCOPE_SELECTED));
+        pmlist.setOperations(operations.getOperationsForScope(OperationScope.GENERAL, OperationScope.SELECTED));
         String sortfield = ctx.getOperation().getConfig("sort-field");
         String sortdirection = ctx.getOperation().getConfig("sort-direction");
         if (sortfield != null) {
@@ -86,6 +87,6 @@ public class ListManager {
         ctx.getList().setPaginable(isPaginable(ctx));
         ctx.getList().setShowRowNumber(showRowNumber);
         ctx.getList().setOperationColWidth(operationColWidth);
-        ctx.getList().setHasSelectedScope(operations.getOperationsForScope(PMCoreObject.SCOPE_SELECTED).count() > 0);
+        ctx.getList().setHasSelectedScope(operations.getOperationsForScope(OperationScope.SELECTED).count() > 0);
     }
 }

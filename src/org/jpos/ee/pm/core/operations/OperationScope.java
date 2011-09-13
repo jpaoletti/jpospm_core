@@ -15,17 +15,31 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.jpos.ee.pm.core;
+package org.jpos.ee.pm.core.operations;
 
 /**
- * Core constants
+ * Operation scopes
+ * 
  * @author jpaoletti
  */
-public interface PMCoreConstants {
+public enum OperationScope {
 
-    public static final String ENTITY = "entity";
-    public static final String PM_CONTEXT = "PM_CONTEXT";
-    public static final String PM_LIST_ORDER = "PM_LIST_ORDER";
-    public static final String PM_LIST_ASC = "PM_LIST_ASC";
-    public static final String PM_EXTRA_DATA = "PM_EXTRA_DATA";
+    GENERAL("general"), ITEM("item"), SELECTED("selected");
+    private String name;
+
+    private OperationScope(String name) {
+        this.name = name;
+    }
+
+    public boolean is(String name) {
+        return getName().equals(name);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }
