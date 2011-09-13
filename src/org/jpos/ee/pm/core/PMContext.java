@@ -39,6 +39,7 @@ public class PMContext extends Context {
     private Object entityInstance;
     private EntityInstanceWrapper entityInstanceWrapper;
     private Field field;
+    private Object fieldValue;
 
     public PMContext(String sessionId) {
         this.sessionId = sessionId;
@@ -407,5 +408,13 @@ public class PMContext extends Context {
 
     public void setField(Field field) {
         this.field = field;
+    }
+
+    public Object getFieldValue() {
+        return fieldValue;
+    }
+
+    public void setFieldValue(Object fieldValue) {
+        this.fieldValue = fieldValue;
     }
 }

@@ -57,7 +57,7 @@ public class GenericConverter extends Converter {
             }
             final Converter c = ctx.getField().getDefaultConverter();
             if (c != null) {
-                ctx.put(PM_FIELD_VALUE, res);
+                ctx.setFieldValue( res);
                 return (String) c.visualize(ctx);
             } else {
                 return res;
@@ -72,7 +72,7 @@ public class GenericConverter extends Converter {
     public Object build(PMContext ctx) throws ConverterException {
         try {
             Interpreter bash = getBsh();
-            bash.set("value", ctx.get(PM_FIELD_VALUE));
+            bash.set("value", ctx.getFieldValue());
             bash.set("converter", this);
             final Object res = bash.eval(content + "\n" + "build();");
             if ("IgnoreConvertionException".equals(res)) {

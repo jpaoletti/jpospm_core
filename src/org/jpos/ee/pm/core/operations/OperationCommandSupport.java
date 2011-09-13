@@ -373,7 +373,7 @@ public class OperationCommandSupport extends PMCoreObject implements OperationCo
             throw new IgnoreConvertionException();
         }
         ctx.setField(field);
-        ctx.put(PM_FIELD_VALUE, values);
+        ctx.setFieldValue(values);
         ctx.setEntityInstanceWrapper(wrapper);
         final Object converted = converter.build(ctx);
         return converted;
@@ -385,7 +385,7 @@ public class OperationCommandSupport extends PMCoreObject implements OperationCo
             for (Validator fv : field.getValidators()) {
                 ctx.setEntityInstance(wrapper.getInstance());
                 ctx.setField(field);
-                ctx.put(PM_FIELD_VALUE, o);
+                ctx.setFieldValue(o);
                 ValidationResult vr = fv.validate(ctx);
                 ctx.getErrors().addAll(vr.getMessages());
                 ok = ok && vr.isSuccessful();

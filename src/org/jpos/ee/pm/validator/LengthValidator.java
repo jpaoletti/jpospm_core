@@ -35,7 +35,7 @@ public class LengthValidator extends ValidatorSupport {
     @Override
     public ValidationResult validate(PMContext ctx) {
         final ValidationResult res = new ValidationResult();
-        final Object object = ctx.get(PMCoreObject.PM_FIELD_VALUE);
+        final Object object = ctx.getFieldValue();
         final String fieldId = ctx.getField().getId();
 
         if (object instanceof String) {

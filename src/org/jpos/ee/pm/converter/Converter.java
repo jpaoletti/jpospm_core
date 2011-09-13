@@ -57,7 +57,7 @@ public class Converter extends PMCoreObject implements PMStrutsConstants {
     /**This method transforms the given value into an object to visualize it
      * @param ctx The context.
      *         Field:             ctx.getField();
-     *         F.Value:           ctx.get(PM_FIELD_VALUE);
+     *         F.Value:           ctx.getFieldValue();
      *         Inst.Wrapper       ctx.getEntityInstanceWrapper();
      *         Entity:            ctx.getEntity();
      *         Entity Instance:   ctx.getEntityInstance();
@@ -72,7 +72,7 @@ public class Converter extends PMCoreObject implements PMStrutsConstants {
      * transforms it in the required object.
      * @param ctx The context.
      *         Field:             ctx.getField();
-     *         F.Value:           ctx.get(PM_FIELD_VALUE);
+     *         F.Value:           ctx.getFieldValue();
      *         Inst.Wrapper       ctx.getEntityInstanceWrapper();
      *         Entity:            ctx.getEntity();
      *         Entity Instance:   ctx.getEntityInstance();
