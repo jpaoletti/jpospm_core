@@ -1,6 +1,6 @@
 /*
  * jPOS Project [http://jpos.org]
- * Copyright (C) 2000-2010 Alejandro P. Revilla
+ * Copyright (C) 2000-2011 Alejandro P. Revilla
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -41,7 +41,7 @@ public class EditOperation extends OperationCommandSupport {
                     proccessField(ctx, f, ctx.getSelected());
                 }
             }
-            if (!ctx.getErrors().isEmpty()) {
+            if (ctx.hasErrors()) {
                 throw new PMException();
             }
             return true;

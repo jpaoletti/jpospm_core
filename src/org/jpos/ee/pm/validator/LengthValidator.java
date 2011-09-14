@@ -18,8 +18,7 @@
 package org.jpos.ee.pm.validator;
 
 import org.jpos.ee.pm.core.PMContext;
-import org.jpos.ee.pm.core.PMCoreObject;
-import org.jpos.ee.pm.core.PMMessage;
+import org.jpos.ee.pm.core.message.MessageFactory;
 
 /**Validate the length of the string.
  * max-length: maximum length of the string
@@ -46,19 +45,28 @@ public class LengthValidator extends ValidatorSupport {
             if (maxl != null) {
                 if (len > maxl) {
                     res.setSuccessful(false);
-                    res.getMessages().add(new PMMessage(fieldId,get("max-length-msg", "pm_core.validator.toolong"), fieldId, len.toString(), maxl.toString()));
+                    res.getMessages().add(MessageFactory.error(
+                            ctx.getEntity(), ctx.getField(),
+                            get("max-length-msg", "pm_core.validator.toolong"),
+                            fieldId, len.toString(), maxl.toString()));
                 }
             }
             Integer minl = getInt("min-length");
             if (minl != null) {
                 if (len < minl) {
                     res.setSuccessful(false);
-                    res.getMessages().add(new PMMessage(fieldId,get("min-length-msg", "pm_core.validator.tooshort"), fieldId, len.toString(), minl.toString()));
+                    res.getMessages().add(MessageFactory.error(
+                            ctx.getEntity(), ctx.getField(),
+                            get("min-length-msg", "pm_core.validator.tooshort"),
+                            fieldId, len.toString(), minl.toString()));
                 }
             }
         } else {
             res.setSuccessful(false);
-            res.getMessages().add(new PMMessage(fieldId, "pm_core.validator.fieldnotstring", fieldId));
+            res.getMessages().add(MessageFactory.error(
+                    ctx.getEntity(), ctx.getField(),
+                    "pm_core.validator.fieldnotstring",
+                    fieldId));
         }
         return res;
     }

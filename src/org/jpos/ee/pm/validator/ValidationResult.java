@@ -16,24 +16,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.jpos.ee.pm.validator;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jpos.ee.pm.core.PMMessage;
+import org.jpos.ee.pm.core.message.Message;
 
-
-/**The result of a validation.
+/**
+ * The result of a validation.
  */
 public class ValidationResult {
+
     /**True when the validation was successful*/
     private boolean successful;
     /**Error messages. The key is the field id and the value is the error message*/
-    private List<PMMessage> messages;
-    
+    private List<Message> messages;
+
     /**Default constructor*/
     public ValidationResult() {
         super();
-        setMessages(new ArrayList<PMMessage>());
+        this.messages = new ArrayList<Message>();
     }
 
     /**
@@ -53,15 +55,14 @@ public class ValidationResult {
     /**
      * @param messages the messages to set
      */
-    public void setMessages(List<PMMessage> messages) {
+    public void setMessages(List<Message> messages) {
         this.messages = messages;
     }
 
     /**
      * @return the messages
      */
-    public List<PMMessage> getMessages() {
+    public List<Message> getMessages() {
         return messages;
     }
-
 }

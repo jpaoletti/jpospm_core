@@ -20,6 +20,7 @@ package org.jpos.ee.pm.core;
 import java.util.ArrayList;
 import java.util.List;
 import org.jpos.ee.pm.core.exception.ConnectionNotFoundException;
+import org.jpos.ee.pm.core.message.Message;
 import org.jpos.ee.pm.security.core.PMSecurityUser;
 
 import org.jpos.transaction.Context;
@@ -33,17 +34,16 @@ public class PMContext extends Context {
 
     private String sessionId;
     private PersistenceManager persistenceManager;
-    private List<PMMessage> errors;
     private EntityContainer entityContainer;
     private Operation operation;
     private Object entityInstance;
     private EntityInstanceWrapper entityInstanceWrapper;
     private Field field;
     private Object fieldValue;
+    private List<Message> messages;
 
     public PMContext(String sessionId) {
         this.sessionId = sessionId;
-        setErrors(new ArrayList<PMMessage>());
     }
 
     public PMContext() {
@@ -55,20 +55,6 @@ public class PMContext extends Context {
      */
     public DataAccess getDataAccess() throws PMException {
         return getEntity().getDataAccess();
-    }
-
-    /**
-     * @return the errors
-     */
-    public List<PMMessage> getErrors() {
-        return errors;
-    }
-
-    /**
-     * @param errors the errors to set
-     */
-    public final void setErrors(List<PMMessage> errors) {
-        this.errors = errors;
     }
 
     /**
@@ -190,11 +176,16 @@ public class PMContext extends Context {
 
     /**
      * Return the entity in the container
+     * 
      * @return The entity
-     * @throws PMException
      */
-    public Entity getEntity() throws PMException {
-        return getEntityContainer().getEntity();
+    public Entity getEntity() {
+        try {
+            return getEntityContainer().getEntity();
+        } catch (PMException ex) {
+            getPresentationManager().warn("Entity not found");
+            return null;
+        }
     }
 
     /**
@@ -416,5 +407,26 @@ public class PMContext extends Context {
 
     public void setFieldValue(Object fieldValue) {
         this.fieldValue = fieldValue;
+    }
+
+    public List<Message> getMessages() {
+        if (messages == null) {
+            messages = new ArrayList<Message>();
+        }
+        return messages;
+    }
+
+    public PMContext addMessage(Message message) {
+        getMessages().add(message);
+        return this;
+    }
+
+    public boolean hasErrors() {
+        for (Message message : getMessages()) {
+            if (message.isError()) {
+                return true;
+            }
+        }
+        return false;
     }
 }

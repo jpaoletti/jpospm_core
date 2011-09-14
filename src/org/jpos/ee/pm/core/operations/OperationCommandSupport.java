@@ -52,6 +52,7 @@ public class OperationCommandSupport extends PMCoreObject implements OperationCo
     }
 
     protected boolean prepare(PMContext ctx) throws PMException {
+
         //No session or no user when user is required.
         if (ctx.getPMSession() == null || (checkUser() && ctx.getUser() == null)) {
             throw new NotAuthenticatedException();
@@ -155,7 +156,7 @@ public class OperationCommandSupport extends PMCoreObject implements OperationCo
                 for (Validator ev : ctx.getOperation().getValidators()) {
                     ctx.setEntityInstance(ctx.getSelected().getInstance());
                     ValidationResult vr = ev.validate(ctx);
-                    ctx.getErrors().addAll(vr.getMessages());
+                    ctx.getMessages().addAll(vr.getMessages());
                     if (!vr.isSuccessful()) {
                         throw new PMException();
                     }
@@ -290,7 +291,7 @@ public class OperationCommandSupport extends PMCoreObject implements OperationCo
             try {
                 ctx.setEntityContainer(ctx.getEntityContainer(pmid));
             } catch (PMException e) {
-                ctx.getErrors().clear();
+                ctx.getMessages().clear();
             }
             if (!ctx.hasEntityContainer()) {
                 ctx.setEntityContainer(ctx.getPresentationManager().newEntityContainer(pmid));
@@ -300,7 +301,7 @@ public class OperationCommandSupport extends PMCoreObject implements OperationCo
                     try {
                         ctx.getPMSession().setContainer(pmid, ctx.getEntityContainer());
                     } catch (Exception e) {
-                        ctx.getErrors().clear();
+                        ctx.getMessages().clear();
                     }
                 }
             }
@@ -392,7 +393,7 @@ public class OperationCommandSupport extends PMCoreObject implements OperationCo
                 ctx.setField(field);
                 ctx.setFieldValue(o);
                 ValidationResult vr = fv.validate(ctx);
-                ctx.getErrors().addAll(vr.getMessages());
+                ctx.getMessages().addAll(vr.getMessages());
                 ok = ok && vr.isSuccessful();
             }
         }

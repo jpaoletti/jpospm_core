@@ -18,7 +18,7 @@
 package org.jpos.ee.pm.validator;
 
 import org.jpos.ee.pm.core.PMContext;
-import org.jpos.ee.pm.core.PMMessage;
+import org.jpos.ee.pm.core.message.MessageFactory;
 
 /**Validate that the field value is a valid name, so it cant use special characters. 
  * Properties are:
@@ -36,7 +36,7 @@ public class IsNameValidator extends ValidatorSupport {
         res.setSuccessful(true);
         if (!isName(fieldvalue)) {
             res.setSuccessful(false);
-            res.getMessages().add(new PMMessage(ctx.getField().getId(), get("msg", "")));
+            res.getMessages().add(MessageFactory.error(ctx.getEntity(), ctx.getField(), get("msg", "")));
         }
         return res;
     }
