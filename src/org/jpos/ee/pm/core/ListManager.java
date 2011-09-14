@@ -1,6 +1,6 @@
 /*
  * jPOS Project [http://jpos.org]
- * Copyright (C) 2000-2010 Alejandro P. Revilla
+ * Copyright (C) 2000-2011 Alejandro P. Revilla
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -30,8 +30,7 @@ public class ListManager {
     public PaginatedList initList(PMContext ctx, Operations operations) throws PMException {
         final PaginatedList pmlist = new PaginatedList();
         //Initial values
-        pmlist.setDesc(false);
-        pmlist.setOrder(null);
+        pmlist.setSort(new ListSort(null, ListSort.SortDirection.ASC));
         pmlist.setPage(1);
         pmlist.setRowsPerPage(Integer.parseInt(ctx.getOperation().getConfig("rows-per-page", "10")));
 
@@ -40,9 +39,10 @@ public class ListManager {
         String sortfield = ctx.getOperation().getConfig("sort-field");
         String sortdirection = ctx.getOperation().getConfig("sort-direction");
         if (sortfield != null) {
-            pmlist.setOrder(sortfield);
+            pmlist.getSort().setFieldId(sortfield);// setOrder(sortfield);
             if (sortdirection != null && sortdirection.toLowerCase().compareTo("desc") == 0) {
-                pmlist.setDesc(true);
+                pmlist.getSort().setDirection(ListSort.SortDirection.DESC);
+                //pmlist.setDesc(true);
             }
         }
         return pmlist;
@@ -54,9 +54,9 @@ public class ListManager {
 
         try {
             if (isPaginable(ctx)) {
-                contents = (List<Object>) ctx.getEntity().getList(ctx, ctx.getEntityContainer().getFilter(), pmlist.from(), pmlist.rpp());
+                contents = (List<Object>) ctx.getEntity().getList(ctx, ctx.getEntityContainer().getFilter(), pmlist.getSort(), pmlist.from(), pmlist.rpp());
             } else {
-                contents = (List<Object>) ctx.getEntity().getList(ctx, ctx.getEntityContainer().getFilter(), null, null);
+                contents = (List<Object>) ctx.getEntity().getList(ctx, ctx.getEntityContainer().getFilter(), pmlist.getSort(), null, null);
             }
             if (!ctx.getEntity().getNoCount()) {
                 total = ctx.getEntity().getDataAccess().count(ctx);

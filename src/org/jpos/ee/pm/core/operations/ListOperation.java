@@ -49,9 +49,6 @@ public class ListOperation extends OperationCommandSupport {
         if (rpp != null) {
             pmlist.setRowsPerPage(rpp);
         }
-
-        ctx.put(PM_LIST_ORDER, pmlist.getOrder());
-        ctx.put(PM_LIST_ASC, !pmlist.isDesc());
         listManager.configureList(ctx, pmlist, operations);
     }
 
@@ -59,10 +56,10 @@ public class ListOperation extends OperationCommandSupport {
         final String o = ctx.getString("order");
         try {
             if (o != null) {
-                pmlist.setOrder(o);
+                pmlist.getSort().setFieldId(o);
             } else {
-                if (pmlist.getOrder() == null) {
-                    pmlist.setOrder(ctx.getEntity().getOrderedFields().get(0).getId());
+                if (pmlist.getSort().isSorted()) {
+                    pmlist.getSort().setFieldId(ctx.getEntity().getOrderedFields().get(0).getId());
                 }
             }
         } catch (PMException e) {
@@ -70,7 +67,11 @@ public class ListOperation extends OperationCommandSupport {
         }
         final Object d = ctx.getParameter("desc");
         if (d != null) {
-            pmlist.setDesc("true".equals(d));
+            if ("true".equals(d)) {
+                pmlist.getSort().setDirection(ListSort.SortDirection.DESC);
+            } else {
+                pmlist.getSort().setDirection(ListSort.SortDirection.ASC);
+            }
         }
     }
 }

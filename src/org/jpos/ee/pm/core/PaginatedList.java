@@ -1,6 +1,6 @@
 /*
  * jPOS Project [http://jpos.org]
- * Copyright (C) 2000-2010 Alejandro P. Revilla
+ * Copyright (C) 2000-2011 Alejandro P. Revilla
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -36,8 +36,7 @@ public class PaginatedList {
     private Integer pages;
     private Long total;
     private Integer rowsPerPage;
-    private String order;
-    private boolean desc;
+    private ListSort sort;
     private Operations operations;
     private Operations rowOperations;
     private boolean searchable;
@@ -67,7 +66,7 @@ public class PaginatedList {
     public String toString() {
         return "PMList [entity=" + entity + ", page " + page + " of "
                 + pages + ", total=" + total + ", rowsPerPage=" + rowsPerPage
-                + ", order=" + order + ", desc=" + desc + "]";
+                + ", order=" + sort.getFieldId() + ", direction=" + sort.getDirection() + "]";
     }
 
     /**
@@ -103,36 +102,15 @@ public class PaginatedList {
         setTotal(total);
     }
 
-    /**
-     *
-     * @return
-     */
-    public String getOrder() {
-        return order;
+    public ListSort getSort() {
+        if (sort == null) {
+            sort = new ListSort(null, ListSort.SortDirection.ASC);
+        }
+        return sort;
     }
 
-    /**
-     *
-     * @param order
-     */
-    public void setOrder(String order) {
-        this.order = order;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public boolean isDesc() {
-        return desc;
-    }
-
-    /**
-     *
-     * @param desc
-     */
-    public void setDesc(boolean desc) {
-        this.desc = desc;
+    public void setSort(ListSort sort) {
+        this.sort = sort;
     }
 
     /**

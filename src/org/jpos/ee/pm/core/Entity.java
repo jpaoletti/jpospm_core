@@ -149,7 +149,7 @@ public class Entity extends PMCoreObject {
      * @throws PMException
      */
     public List<?> getList(PMContext ctx, EntityFilter filter) throws PMException {
-        return getList(ctx, filter, null, null);
+        return getList(ctx, filter, null, null, null);
     }
 
     /**
@@ -162,7 +162,7 @@ public class Entity extends PMCoreObject {
      */
     public List<?> getList(PMContext ctx) throws PMException {
         EntityFilter filter = (this.equals(ctx.getEntity())) ? ctx.getEntityContainer().getFilter() : null;
-        return getList(ctx, filter, null, null);
+        return getList(ctx, filter, null, null, null);
     }
 
     /**
@@ -175,8 +175,8 @@ public class Entity extends PMCoreObject {
      * @return The list
      * @throws PMException
      */
-    public List<?> getList(PMContext ctx, EntityFilter filter, Integer from, Integer count) throws PMException {
-        return getDataAccess().list(ctx, filter, from, count);
+    public List<?> getList(PMContext ctx, EntityFilter filter, ListSort sort, Integer from, Integer count) throws PMException {
+        return getDataAccess().list(ctx, filter, sort, from, count);
     }
 
     /**Getter for a field by its id

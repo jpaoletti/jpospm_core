@@ -35,7 +35,7 @@ public class DataAccessEntityContainer implements DataAccess {
     }
 
     @Override
-    public List<?> list(PMContext ctx, EntityFilter filter, Integer from, Integer count) throws PMException {
+    public List<?> list(PMContext ctx, EntityFilter filter, ListSort sort, Integer from, Integer count) throws PMException {
         PMSession pc = getParent(ctx);
         List<?> weaklist = new ArrayList(pc.getContainers());
         int f = (from == null) ? 0 : from;

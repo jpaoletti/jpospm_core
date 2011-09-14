@@ -61,9 +61,7 @@ public class PMFilterOperation extends OperationCommandSupport {
         PaginatedList pmlist = ctx.getList();
         DisplacedList<Object> contents = new DisplacedList<Object>();
         Long total = null;
-        ctx.put(PM_LIST_ORDER, pmlist.getOrder());
-        ctx.put(PM_LIST_ASC, !pmlist.isDesc());
-        contents.addAll((List<Object>) ctx.getEntity().getList(ctx, ctx.getEntityContainer().getFilter(), pmlist.from(), pmlist.rpp()));
+        contents.addAll((List<Object>) ctx.getEntity().getList(ctx, ctx.getEntityContainer().getFilter(), pmlist.getSort(), pmlist.from(), pmlist.rpp()));
         if (!ctx.getEntity().getNoCount()) {
             total = ctx.getEntity().getDataAccess().count(ctx);
         }

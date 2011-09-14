@@ -35,7 +35,7 @@ public class DataAccessVoid implements DataAccess {
     }
 
     @Override
-    public List<?> list(PMContext ctx, EntityFilter filter, Integer from, Integer count) throws PMException {
+    public List<?> list(PMContext ctx, EntityFilter filter, ListSort sort, Integer from, Integer count) throws PMException {
         return new ArrayList<Object>();
     }
 

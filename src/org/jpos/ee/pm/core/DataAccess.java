@@ -51,12 +51,13 @@ public interface DataAccess {
      * 
      * @param ctx The context
      * @param filter The filter of the list
+     * @param sort List sort
      * @param from The starting index of the list
      * @param count The maximum number of resultant items
      * @return The list of items
      * @throws PMException
      * */
-    public List<?> list(PMContext ctx, EntityFilter filter, Integer from, Integer count) throws PMException;
+    public List<?> list(PMContext ctx, EntityFilter filter, ListSort sort, Integer from, Integer count) throws PMException;
 
     /**Get the total number of items of the entity
      * @param ctx The context
