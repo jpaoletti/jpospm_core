@@ -57,7 +57,7 @@ public class ShowDecimalConverter extends ShowStringConverter {
         if (o == null) {
             return getConfig("null-value", "0.00");
         } else {
-            return visualize(formatter.format(o), ctx.getString(PM_EXTRA_DATA));
+            return visualize(formatter.format(o));
         }
     }
 }

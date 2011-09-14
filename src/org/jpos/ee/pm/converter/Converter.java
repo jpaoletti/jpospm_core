@@ -171,7 +171,7 @@ public class Converter extends PMCoreObject implements PMStrutsConstants {
      * @return The string representation of the given object
      * @throws ConverterException when an exception occurs trying to convert.
      */
-    public String visualize(Object obj, String extra) throws ConverterException {
+    public String visualize(Object obj) throws ConverterException {
         Integer pad = 0;
         String padc = getConfig("pad-count", "0");
         try {

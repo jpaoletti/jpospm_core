@@ -50,7 +50,7 @@ public class GenericConverter extends Converter {
             String res = getConfig("null-value", "-");
             if (o != null) {
                 String result = bash.eval(content + "\n" + "visualize();").toString();
-                res = visualize(result, ctx.getString(PM_EXTRA_DATA));
+                res = visualize(result);
                 if ("IgnoreConvertionException".equals(res)) {
                     throw new IgnoreConvertionException("");
                 }

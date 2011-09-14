@@ -41,7 +41,7 @@ public class ShowStringConverter extends Converter {
     }
 
     @Override
-    public String visualize(Object obj, String extra) throws ConverterException {
+    public String visualize(Object obj) throws ConverterException {
         String prefix = getConfig("prefix");
         String suffix = getConfig("suffix");
         String res = obj != null ? obj.toString() : "";
@@ -60,6 +60,6 @@ public class ShowStringConverter extends Converter {
     @Override
     public String visualize(PMContext ctx) throws ConverterException {
         final Object o = getValue(ctx.getEntityInstance(), ctx.getField());
-        return visualize(o, ctx.getString(PM_EXTRA_DATA));
+        return visualize(o);
     }
 }

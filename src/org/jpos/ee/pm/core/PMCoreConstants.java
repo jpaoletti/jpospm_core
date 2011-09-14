@@ -25,5 +25,4 @@ public interface PMCoreConstants {
 
     public static final String ENTITY = "entity";
     public static final String PM_CONTEXT = "PM_CONTEXT";
-    public static final String PM_EXTRA_DATA = "PM_EXTRA_DATA";
 }
