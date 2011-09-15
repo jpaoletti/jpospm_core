@@ -54,7 +54,7 @@ public class OperationCommandSupport extends PMCoreObject implements OperationCo
     protected boolean prepare(PMContext ctx) throws PMException {
 
         //No session or no user when user is required.
-        if (ctx.getPMSession() == null || (checkUser() && ctx.getUser() == null)) {
+        if (ctx.getPmsession() == null || (checkUser() && ctx.getUser() == null)) {
             throw new NotAuthenticatedException();
         }
         configureEntityContainer(ctx);
@@ -272,15 +272,15 @@ public class OperationCommandSupport extends PMCoreObject implements OperationCo
     }
 
     protected EntityContainer getEntityContainer(PMContext ctx, String eid) {
-        return (EntityContainer) ctx.getPMSession().getContainer(EntityContainer.buildId(PresentationManager.HASH, eid));
+        return (EntityContainer) ctx.getPmsession().getContainer(EntityContainer.buildId(PresentationManager.HASH, eid));
     }
 
     protected boolean configureEntityContainer(PMContext ctx) throws PMException {
         String pmid = ctx.getString(PM_ID);
         if (pmid == null) {
-            pmid = ctx.getPMSession().getString(LAST_PM_ID);
+            pmid = ctx.getPmsession().getString(LAST_PM_ID);
         } else {
-            ctx.getPMSession().put(LAST_PM_ID, pmid);
+            ctx.getPmsession().put(LAST_PM_ID, pmid);
         }
         boolean fail = false;
         if (pmid == null) {
@@ -296,10 +296,10 @@ public class OperationCommandSupport extends PMCoreObject implements OperationCo
             if (!ctx.hasEntityContainer()) {
                 ctx.setEntityContainer(ctx.getPresentationManager().newEntityContainer(pmid));
                 if (checkEntity()) {
-                    ctx.getPMSession().setContainer(pmid, ctx.getEntityContainer());
+                    ctx.getPmsession().setContainer(pmid, ctx.getEntityContainer());
                 } else {
                     try {
-                        ctx.getPMSession().setContainer(pmid, ctx.getEntityContainer());
+                        ctx.getPmsession().setContainer(pmid, ctx.getEntityContainer());
                     } catch (Exception e) {
                         ctx.getMessages().clear();
                     }

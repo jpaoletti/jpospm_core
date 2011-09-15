@@ -117,7 +117,7 @@ public class PMContext extends Context {
      * @throws PMException when no container was found
      */
     public EntityContainer getEntityContainer(String id) throws PMException {
-        EntityContainer ec = (EntityContainer) getPMSession().getContainer(id);
+        EntityContainer ec = (EntityContainer) getPmsession().getContainer(id);
         if (ec == null) {
             throw new PMException("pm_core.entity.not.found");
         }
@@ -234,7 +234,7 @@ public class PMContext extends Context {
         }
     }
 
-    public PMSession getPMSession() {
+    public PMSession getPmsession() {
         return getPresentationManager().getSession(getSessionId());
     }
 
@@ -246,10 +246,10 @@ public class PMContext extends Context {
      * @return The user
      */
     public PMSecurityUser getUser() {
-        if (getPMSession() == null) {
+        if (getPmsession() == null) {
             return null;
         }
-        return getPMSession().getUser();
+        return getPmsession().getUser();
     }
 
     /**Indicates if there is a user online
