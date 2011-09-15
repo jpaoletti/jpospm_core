@@ -617,6 +617,9 @@ public class PresentationManager extends Observable {
      * Returns the internacionalized string for the given key
      */
     public static String getMessage(String key, Object... params) {
+        if (key == null) {
+            return null;
+        }
         try {
             ResourceBundle bundle = ResourceBundle.getBundle("org.jpos.ee.ApplicationResource");
             String string = bundle.getString(key);
