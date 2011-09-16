@@ -36,6 +36,7 @@ public class PMFilterOperation extends OperationCommandSupport {
     @Override
     protected boolean prepare(PMContext ctx) throws PMException {
         super.prepare(ctx);
+        ctx.getEntityContainer().setSelected(null);
         if (ctx.getParameter("finish") == null) {
             if (ctx.getEntityContainer().getFilter() == null) {
                 //Creates filter bean and put it in session
