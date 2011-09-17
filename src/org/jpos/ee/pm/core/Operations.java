@@ -66,10 +66,10 @@ public class Operations extends PMCoreObject {
     public Operations getOperationsFor(final PMContext ctx, Object instance, Operation operation) throws PMException {
         final Operations result = new Operations();
         final List<Operation> r = new ArrayList<Operation>();
-        if (instance != null) {
-            for (Operation op : getOperations()) {
-                if (op.isDisplayed(operation.getId()) && op.isEnabled() && !op.equals(operation)) {
-                    if (op.getCondition() == null || op.getCondition().check(ctx, instance, op, operation.getId())) {
+        for (Operation op : getOperations()) {
+            if (op.isDisplayed(operation.getId()) && op.isEnabled() && !op.equals(operation)) {
+                if (op.getCondition() == null || op.getCondition().check(ctx, instance, op, operation.getId())) {
+                    if (instance != null || OperationScope.GENERAL.is(op.getScope())) {
                         r.add(op);
                     }
                 }
