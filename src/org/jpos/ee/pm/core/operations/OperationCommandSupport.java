@@ -26,6 +26,7 @@ import org.jpos.ee.pm.converter.IgnoreConvertionException;
 import org.jpos.ee.pm.core.*;
 import org.jpos.ee.pm.core.exception.NotAuthenticatedException;
 import org.jpos.ee.pm.core.exception.NotAuthorizedException;
+import org.jpos.ee.pm.core.message.MessageFactory;
 import org.jpos.ee.pm.validator.ValidationResult;
 import org.jpos.ee.pm.validator.Validator;
 import org.jpos.util.DisplacedList;
@@ -52,7 +53,6 @@ public class OperationCommandSupport extends PMCoreObject implements OperationCo
     }
 
     protected boolean prepare(PMContext ctx) throws PMException {
-
         //No session or no user when user is required.
         if (ctx.getPmsession() == null || (checkUser() && ctx.getUser() == null)) {
             throw new NotAuthenticatedException();
@@ -185,18 +185,14 @@ public class OperationCommandSupport extends PMCoreObject implements OperationCo
             if (identified != null && identified.trim().compareTo("") != 0) {
                 ctx.getPresentationManager().debug(this, "Getting row identified by: " + identified);
                 String[] ss = identified.split(":");
-                //TODO Throw exception when the size of this is not 2
-                if (ss.length != 2) {
-                    throw new PMException("unknow.item");
-                } else {
+                if (ss.length == 2) {
                     final String prop = ss[0];
                     final String value = ss[1];
                     final Object object = ctx.getEntity().getDataAccess().getItem(ctx, prop, value);
-                    if (object == null) {
-                        throw new PMException("unknow.item");
+                    if (object != null) {
+                        final EntityInstanceWrapper wrapper = new EntityInstanceWrapper(object);
+                        ctx.getEntityContainer().setSelected(wrapper);
                     }
-                    final EntityInstanceWrapper wrapper = new EntityInstanceWrapper(object);
-                    ctx.getEntityContainer().setSelected(wrapper);
                 }
             } else {
                 ctx.getPresentationManager().debug(this, "Row Selection ignored");
@@ -207,7 +203,7 @@ public class OperationCommandSupport extends PMCoreObject implements OperationCo
             ctx.getOperation().getContext().preConversion(ctx);
         }
         if (checkSelected() && ctx.getEntityContainer().getSelected() == null) {
-            throw new PMException("unknow.item");
+            ctx.addMessage(MessageFactory.error(ctx.getEntity(), "unknow.item"));
         }
     }
 
