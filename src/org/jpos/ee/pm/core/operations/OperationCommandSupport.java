@@ -288,22 +288,9 @@ public class OperationCommandSupport extends PMCoreObject implements OperationCo
                 ctx.getEntityContainer();
             }
         } else {
-            try {
-                ctx.setEntityContainer(ctx.getEntityContainer(pmid));
-            } catch (PMException e) {
-                ctx.getMessages().clear();
-            }
-            if (!ctx.hasEntityContainer()) {
-                ctx.setEntityContainer(ctx.getPresentationManager().newEntityContainer(pmid));
-                if (checkEntity()) {
-                    ctx.getPmsession().setContainer(pmid, ctx.getEntityContainer());
-                } else {
-                    try {
-                        ctx.getPmsession().setContainer(pmid, ctx.getEntityContainer());
-                    } catch (Exception e) {
-                        ctx.getMessages().clear();
-                    }
-                }
+            ctx.setEntityContainer(ctx.getEntityContainer(pmid));
+            if (!ctx.hasEntityContainer() && checkEntity()) {
+                throw new PMException("pm_core.entity.not.found");
             }
         }
         return !fail;

@@ -110,16 +110,17 @@ public class PMContext extends Context {
     }
 
     /**
-     * Retrieve the container with the given id from session
+     * Retrieve the container with the given id from session. If not defined, a
+     * new one is created.
      *
      * @param id The entity id
      * @return The container
-     * @throws PMException when no container was found
      */
-    public EntityContainer getEntityContainer(String id) throws PMException {
+    public EntityContainer getEntityContainer(String id) {
         EntityContainer ec = (EntityContainer) getPmsession().getContainer(id);
         if (ec == null) {
-            throw new PMException("pm_core.entity.not.found");
+            ec = getPresentationManager().newEntityContainer(id);
+            getPmsession().setContainer(id, ec);
         }
         return ec;
     }
