@@ -3,7 +3,7 @@
 <entity id="pmsession" clazz="org.jpos.ee.pm.core.PMSession">
     <dataAccess class="org.jpos.ee.pm.ui.DataAccessPMSession" />
     <operations>
-        <operation id="list" enabled="true" scope="item" display="all">
+        <operation id="list" scope="general" display="all">
             <properties>
                 <property name="operation-column-width" value="1px" />
             </properties>
